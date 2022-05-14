@@ -1,0 +1,90 @@
+.MuiSelect-select:focus {
+  background-color: none !important;
+}
+.shipping {
+  border: 1px solid firebrick;
+}
+.page_title {
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 0;
+  font-size: 25px;
+  font-family: Poppins;
+  font-weight: 500;
+  font-style: normal;
+  text-align: start;
+  color: #245462;
+}
+
+.enter_shipping_address {
+  width: 60%;
+  padding: 10px 0;
+}
+.your_orders {
+  width: 35%;
+}
+.disabled {
+  pointer-events: none !important;
+  cursor: crosshair !important;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 40px;
+  margin: 10px 0;
+  padding: 0;
+  margin-bottom: 30px !important;
+}
+.row input,
+.row select {
+  width: 48%;
+  height: 100%;
+  padding: 0px 10px;
+  background: #f9f9f9;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.07);
+  border: none;
+  outline: none;
+  font-family: Kanit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: #414141;
+}
+.row select {
+  color: #7f7c7c !important;
+}
+.row select option {
+  color: #414141 !important;
+  height: 30px;
+}
+.row input:focus {
+  box-shadow: inset 0px 0px 4px rgb(34, 138, 163);
+  background: #fff;
+}
+.row select:focus {
+  box-shadow: inset 0px 0px 4px rgb(34, 138, 163);
+  background: #fff;
+}
+.address_space {
+  width: 100%;
+  height: 40px;
+  padding: 0px 10px;
+  background: #f9f9f9;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.07);
+  border: none;
+  outline: none;
+  font-family: Kanit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: #414141;
+}
+.address_space:focus {
+  box-shadow: inset 0px 0px 4px rgb(34, 138, 163);
+  background: #fff;
+}
+.MuiTypography-caption {
+  font-size: 25px !important;
+  color: #245462;
+}
