@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaUser, FaIndent, FaSignOutAlt } from "react-icons/fa";
 import MenuColumn2 from "./menuComponents/MenuColumn2";
 import phoneDark from "../LoftMebelPhoto/phone.svg";
 import deliveryDark from "../LoftMebelPhoto/delivery-icon.svg";
 import { StorageContext } from "../context/Context";
+import MenuProfile from "./MenuProfile";
 import {
   IoPersonOutline,
   IoPerson,
@@ -25,21 +25,11 @@ export default function LogoSearchIcons({
     setWishlist,
     wishlist,
     likedProduct,
-    setActiveProfile,
-    activeProfile,
   } = useContext(WishlistContext);
-  const removeStorage = () => {
-    setRefreshToken(true);
-    localStorage.removeItem("refresh", "");
-    localStorage.removeItem("access", "");
-  };
+  
   const changeWishlist = (e) => {
     e.stopPropagation();
     setWishlist(true);
-  };
-  const handler = (e) => {
-    e.stopPropagation();
-    setActiveProfile(!activeProfile);
   };
   return (
     <div className="logoSearchIcons">
@@ -66,37 +56,7 @@ export default function LogoSearchIcons({
           <IoPerson className="contact_icon" />
         </Link>
       ) : (
-        <div onClick={(e) => handler(e)} className="cart_link_contact">
-          <IoPersonOutline
-            className={
-              activeProfile
-                ? `contact_icon_outline active_page`
-                : `contact_icon_outline`
-            }
-          />
-          <IoPerson className="contact_icon" />
-          <ul
-            className={
-              !activeProfile ? "contact_list" : "contact_list open_menu_profile"
-            }
-          >
-            <li className="contact_item">
-              <FaUser className="user_icon" />
-              <p>Account</p>
-            </li>
-            <li className="contact_item">
-              <FaIndent className="user_icon" />
-              <p>My orders</p>
-            </li>
-            <li
-              onClick={() => removeStorage()}
-              className="contact_item log_out"
-            >
-              <FaSignOutAlt className="user_icon" />
-              <p>Log out</p>
-            </li>
-          </ul>
-        </div>
+        <MenuProfile setRefreshToken={setRefreshToken}/>
       )}
     </div>
   );

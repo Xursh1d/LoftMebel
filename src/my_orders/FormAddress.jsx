@@ -11,17 +11,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       width: "100%",
-      // paddingRight: "20px",
+      
     },
   },
   row: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "space-between",
     width: "100%",
     height: "120px",
     margin: "10px 0",
     marginBottom: "40px",
+    [theme.breakpoints.down("sm")]: {
+    marginBottom: "20px",      
+    },
   },
   Input: {
     marginBottom: "40px",
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
       height: "40px",
       width: "100%",
       fontSize: "14px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: "40px",
+      width: "100%",
+      fontSize: "14px",
+      marginBottom:"30px"
     },
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       border: `1px solid ${theme.palette.secondary.main}`,
@@ -70,6 +78,9 @@ const useStyles = makeStyles((theme) => ({
     height: "40px",
     borderRadius: "0px",
     marginBottom: "40px",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom:"30px"
+    },
   },
   Select: {
     [theme.breakpoints.down("lg")]: {

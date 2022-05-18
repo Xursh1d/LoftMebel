@@ -3,12 +3,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "65%",
+    [theme.breakpoints.down("sm")]: {
+      width:"100%",
+
+    },
+  },
+  label:{
+    [theme.breakpoints.down("sm")]: {
+      fontSize:"11px !important"
+    },
   },
   button: {
     marginRight: theme.spacing(1),
@@ -20,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ["Shipping", "Review & Payment"];
+  return ["Shipping", "Payment"];
 }
 
 function getStepContent(step) {
@@ -72,35 +79,16 @@ export default function HorizontalLinearStepper({
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          //   if (isStepOptional(index)) {
-          //     // labelProps.optional = (
-          //     // //   <Typography variant="caption">Optional</Typography>
-          //     // );
-          //   }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
           return (
             <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+              <StepLabel className={classes.label} {...labelProps}>{label}</StepLabel>
             </Step>
           );
         })}
       </Stepper>
-      {/* <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div> */}
     </div>
   );
 }

@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Grid, Typography, Paper } from "@material-ui/core";
+import { Box, Grid, Typography} from "@material-ui/core";
 import { getRegions } from "../api/UrlApi";
 import "./Order.css";
 import ReactLoading from "react-loading";
-import { StorageContext } from "../context/Context";
+import { StorageContext, TokensContext } from "../context/Context";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { CategoriesContext } from "../context/Context";
 import FormAddress from "./FormAddress";
 import { makeStyles } from "@material-ui/core/styles";
 import ProductList from "./ProductList";
 import HorizontalLinearStepper from "./Stepper";
+import { Redirect } from "react-router";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(3, 64, 119)",
+      main: "#245462",
     },
     secondary: {
       main: "rgb(2, 91, 130)",
@@ -28,8 +29,32 @@ const useStyles = makeStyles({
   typography: {
     color: theme.palette.secondary.main,
   },
+  typographyIndex: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+      top: "80px",
+    },
+  },
+  positionStep: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      position: "absolute",
+      top: "0px",
+    },
+  },
   products: {
     minHeight: "0",
+    margin: "auto",
+    marginBottom: "50px !important",
+    [theme.breakpoints.down("lg")]: {
+      width: "100%",
+      marginTop: "0px",
+    },
   },
   productsList: {
     "&::-webkit-scrollbar": {
@@ -42,14 +67,28 @@ const useStyles = makeStyles({
       backgroundColor: "rgba(0,0,0,.2)",
       borderRadius: "2px",
     },
-    transition: "max-height 0.5s ease-in",
-    maxHeight: "440px",
-    minHeight: "50px",
-    overflow: "hidden",
-    overflowY: "auto",
-    borderRadius: "5px",
+    [theme.breakpoints.down("md")]: {
+      boxShadow: "none",
+    },
+    [theme.breakpoints.down("lg")]: {
+      padding: "0",
+      width: "100% !important",
+      margin: "0 !important",
+      minHeight: "50px",
+      maxHeight: "none",
+    },
+    [theme.breakpoints.up("lg")]: {
+      transition: "max-height 0.5s ease-in",
+      maxHeight: "440px",
+      minHeight: "50px",
+      overflow: "hidden",
+      overflowY: "auto",
+      borderRadius: "5px",
+      padding: "10px 0",
+    },
   },
   totalCost: {
+    width: "100%",
     height: "180px",
     padding: "15px 20px",
     borderRadius: "5px",
@@ -59,12 +98,19 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   section: {
-    padding: "30px",
-    borderRadius: "10px",
-    width: "90%",
-    margin: "auto",
-    marginTop: "30px",
-    marginBottom: "70px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "30px",
+      borderRadius: "10px",
+      width: "90%",
+      margin: "auto",
+      marginTop: "30px",
+      marginBottom: "70px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      padding: "20px 0",
+      boxShadow: "none",
+    },
   },
   productSum: {
     display: "flex",
@@ -74,9 +120,53 @@ const useStyles = makeStyles({
     alignItems: "center",
     borderRadius: "0",
   },
+  stepper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "150px",
+      display: "flex",
+      flexDirection: "column",
+      position: "relative",
+    },
+  },
+  orderTitle: {
+    textAlign: "center",
+    lineHeight: "40px",
+    fontSize: "17px",
+    marginBottom: "10px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "20px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "17px",
+    },
+  },
+  cost: {
+    fontSize: "13px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "17px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "13px",
+    },
+  },
+  orderTotal: {
+    fontSize: "17px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "20px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "17px",
+    },
+  },
 });
+
 export default function MyOrders() {
   const classes = useStyles();
+  const [refreshToken] = useContext(TokensContext);
   const { loading, setLoading } = useContext(CategoriesContext);
   const [regions, setRegions] = useState([]);
   const [changeRegions, setChangeRegions] = useState();
@@ -107,153 +197,136 @@ export default function MyOrders() {
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  return (
-    <MuiThemeProvider theme={theme}>
-      <Box>
-        <Box className={classes.section} boxShadow={2}>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <Typography className={classes.typography} variant="caption">
-                Shipping Address
-              </Typography>
-              <p className="product-adress" style={{ marginTop: 10 }}>
-                Home / Basket / Shipping address
-              </p>
-            </div>
-            <HorizontalLinearStepper
-              isStepSkipped={isStepSkipped}
-              activeStep={activeStep}
-              setActiveStep={setActiveStep}
-              skipped={skipped}
-              setSkipped={setSkipped}
-            />
-          </div>
-          <Grid container spacing={3} style={{ marginTop: "20px" }}>
-            <Grid className={classes.formaddress} item lg={7}>
-              <FormAddress
-                cartStorage={cartStorage}
-                regions={regions}
-                district={district}
-                handleChangeRegions={handleChangeRegions}
-                handleNext={handleNext}
+  if (refreshToken) {
+    return <Redirect to="/user/sign_in" />
+  }
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Box>
+          <Box className={classes.section} boxShadow={1}>
+            <div className={classes.stepper}>
+              <div className={classes.typographyIndex}>
+                <Typography className={classes.typography} variant="caption">
+                  Shipping Address
+                </Typography>
+                <p className="product-adress" style={{ marginTop: 10 }}>
+                  Home / Basket / Shipping address
+                </p>
+              </div>
+              <HorizontalLinearStepper
+                isStepSkipped={isStepSkipped}
+                activeStep={activeStep}
+                setActiveStep={setActiveStep}
+                skipped={skipped}
+                setSkipped={setSkipped}
+                className={classes.positionStep}
               />
-            </Grid>
-            <Grid item className={classes.products} lg={5}>
-              <Typography
-                variant="subtitle2"
-                style={{
-                  fontSize: "17px",
-                  textAlign: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                Your order
-              </Typography>
-              <Box className={classes.productsList} boxShadow={1}>
-                {cartStorage.length ? (
-                  <ProductList
-                    cartStorage={cartStorage}
-                    removeLocalStorage={removeLocalStorage}
-                  />
-                ) : (
-                  <Typography
-                    variant="h6"
-                    style={{
-                      display: "flex",
-                      lineHeight: "40px",
-                      justifyContent: "center",
-                      height: "100%",
-                      width: "100%",
-                      color: theme.palette.error.main,
-                    }}
-                  >
-                    Not found !
-                  </Typography>
-                )}
-              </Box>
-              <Box>
-                <Box className={classes.totalCost} boxShadow={1}>
+            </div>
+            <Grid container spacing={3} style={{ marginTop: "20px" }}>
+              <Grid className={classes.formaddress} item xs={12} md={12} lg={7}>
+                <FormAddress
+                  cartStorage={cartStorage}
+                  regions={regions}
+                  district={district}
+                  handleChangeRegions={handleChangeRegions}
+                  handleNext={handleNext}
+                />
+              </Grid>
+              <Grid item className={classes.products} xs={12} md={10} lg={5}>
+                <Box style={{ display: "flex", flexDirection: "column" }}>
                   <Typography
                     variant="subtitle2"
                     style={{
-                      textAlign: "center",
-                      lineHeight: "40px",
                       fontSize: "17px",
-                      marginBottom: "10px",
-                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      marginBottom: "15px",
                     }}
                   >
-                    Order Summary
+                    Your order
                   </Typography>
-                  <Box className={classes.productSum} borderBottom={0}>
-                    <Typography style={{ fontSize: "13px" }}>
-                      Subtotal
-                    </Typography>
-                    <Typography style={{ fontSize: "13px" }}>
-                      {allSum} $
-                    </Typography>
-                  </Box>
-                  <Box className={classes.productSum} borderBottom={0}>
-                    <Typography style={{ fontSize: "13px" }}>
-                      Shipping
-                    </Typography>
-                    <Typography style={{ fontSize: "13px" }}>0 $</Typography>
-                  </Box>
-                  <Box
-                    borderTop={1}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      height: "35px",
-                      width: "100%",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <Typography
-                      variant="subtitle2"
-                      style={{
-                        fontSize: "17px",
-                      }}
-                    >
-                      Order total
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      style={{
-                        fontSize: "17px",
-                      }}
-                    >
-                      {allSum} $
-                    </Typography>
+                  <Box className={classes.productsList} boxShadow={1}>
+                    {cartStorage.length ? (
+                      <ProductList
+                        cartStorage={cartStorage}
+                        removeLocalStorage={removeLocalStorage}
+                      />
+                    ) : (
+                      <Typography
+                        variant="h6"
+                        style={{
+                          display: "flex",
+                          lineHeight: "40px",
+                          justifyContent: "center",
+                          height: "100%",
+                          width: "100%",
+                          color: theme.palette.error.main,
+                        }}
+                      >
+                        Not found !
+                      </Typography>
+                    )}
                   </Box>
                 </Box>
-              </Box>
+                <Box>
+                  <Box className={classes.totalCost} boxShadow={1}>
+                    <Typography
+                      variant="subtitle2"
+                      className={classes.orderTitle}
+                    >
+                      Order Summary
+                    </Typography>
+                    <Box className={classes.productSum} borderBottom={0}>
+                      <Typography className={classes.cost}>Subtotal</Typography>
+                      <Typography className={classes.cost}>
+                        {allSum} $
+                      </Typography>
+                    </Box>
+                    <Box className={classes.productSum} borderBottom={0}>
+                      <Typography className={classes.cost}>Shipping</Typography>
+                      <Typography className={classes.cost}>0 $</Typography>
+                    </Box>
+                    <Box
+                      borderTop={1}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        height: "40px",
+                        width: "100%",
+                        marginTop: "15px",
+                      }}
+                    >
+                      <Typography
+                        variant="subtitle2"
+                        className={classes.orderTotal}
+                      >
+                        Order total
+                      </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        className={classes.orderTotal}
+                      >
+                        {allSum} $
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-    </MuiThemeProvider>
-  );
+      </MuiThemeProvider>
+    );
 }

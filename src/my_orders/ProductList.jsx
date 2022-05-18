@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: " 20px 15px",
+    [theme.breakpoints.down("sm")]: {
+    padding: " 20px 0px",      
+    },
+    [theme.breakpoints.down("lg")]: {
+      width:"100%",
+    }
   },
   paper: {
     position: "relative",
@@ -23,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.07)",
     width: "98%",
     maxWidth: 500,
+
+    [theme.breakpoints.down("md")]: {
+      maxWidth: 600,
+    },
   },
   image: {
     width: "100%",

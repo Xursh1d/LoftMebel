@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import Home from "./Home";
 import Basket from "./Basket";
 import ProductCard from "./ProductCard";
@@ -48,7 +48,7 @@ function App() {
 
   let getToken = localStorage.getItem("refresh");
   useEffect(() => {
-    if (getToken && getToken !== null) {
+    if(getToken && getToken !== null) {
       setRefreshToken(isJwtExpired(localStorage.getItem("refresh")));
     } else {
       setRefreshToken(true);
@@ -170,7 +170,8 @@ function App() {
                             <Route path="/search/:slug" component={Term} />
                             <Route path="/user/sign_in" component={SignIn} />
                             <Route path="/user/sign_up" component={SignUp} />
-                            <Route path="/my_orders" component={MyOrders} />
+                            <Route path="/my_orders" component={MyOrders}/>
+                            
                           </Switch>
                         </TokensContext.Provider>
                       </ChangeSearchContext.Provider>

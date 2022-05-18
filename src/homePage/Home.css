@@ -91,69 +91,7 @@
   .cart_link_contact:hover .contact_icon_outline {
     display: none !important;
   }
-  .contact_list {
-    position: absolute;
-    display: none;
-    min-width: 160px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 20px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    min-width: 140px;
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
-  }
+  
   /* basket_icon */
 
   .cart_link_basket {
@@ -1227,69 +1165,6 @@
   }
   .cart_link_contact:hover .contact_icon_outline {
     display: none !important;
-  }
-  .contact_list {
-    position: absolute;
-    display: none;
-    min-width: 160px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 20px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    min-width: 140px;
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
   }
 
   /* basket_icon */
@@ -2580,69 +2455,7 @@
   .cart_link_contact:hover .contact_icon_outline {
     display: none !important;
   }
-  .contact_list {
-    position: absolute;
-    display: none;
-    min-width: 160px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 20px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    min-width: 140px;
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
-  }
+  
   /* basket_icon */
 
   .cart_link_basket {
@@ -3923,69 +3736,7 @@
   .cart_link_contact:hover .contact_icon_outline {
     display: none !important;
   }
-  .contact_list {
-    position: absolute;
-    display: none;
-    min-width: 160px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 20px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    min-width: 140px;
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
-  }
+  
   /* basket_icon */
 
   .cart_link_basket {
@@ -5273,69 +5024,6 @@
     font-size: 21px;
   }
 
-  .contact_list {
-    position: absolute;
-    display: none;
-    width: 150px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 10px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    width: 100%;
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
-  }
   /* basket_icon */
 
   .cart_link_basket {
@@ -6421,71 +6109,7 @@
     font-size: 21px;
   }
 
-  .contact_list {
-    position: absolute;
-    display: none;
-    width: 150px;
-    list-style: none;
-    min-height: 100px;
-    top: 130%;
-    padding: 10px 10px !important;
-    z-index: 100;
-    right: 0;
-    opacity: 0;
-    transition: display 1s ease-in-out;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.07);
-    background-color: #c8ecf7;
-    border-radius: 5px;
-  }
-  .open_menu_profile {
-    opacity: 1;
-    transition: display 2s ease-in-out;
-    display: block !important;
-  }
-  .contact_item {
-    height: 30px;
-    width: 100%;
-    /* border: 1px solid firebrick !important; */
-    display: flex;
-    padding: 0 10px;
-    padding-left: 0 !important;
-    align-items: center;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 400;
-    color: #245462;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #c8ecf7;
-  }
-
-  .user_icon {
-    color: #faffff;
-    font-size: 20px;
-    margin-right: 10px;
-  }
-  .contact_item p {
-    border: 2px solid #c8ecf7;
-  }
-  .contact_item:hover p {
-    border-bottom: 2px solid #245462;
-  }
-  .contact_item:hover {
-    transition: border 0.5s ease-in-out;
-  }
-  .log_out {
-    color: firebrick;
-  }
-  .log_out p {
-    border: 2px solid #c8ecf7;
-  }
-  .log_out .user_icon {
-    color: firebrick;
-  }
-  .log_out:hover p {
-    border-bottom: 2px solid firebrick !important;
-  }
-
+  
   /* basket_icon */
 
   .active_page {
