@@ -45,7 +45,6 @@ function App() {
   const [changeSearch, setChangeSearch] = useState([]);
   const [search, setSearch] = useState();
   const [refreshToken, setRefreshToken] = useState(true);
-  const [load,setLoad]=useState()
 
   let getToken = localStorage.getItem("refresh");
   useEffect(() => {
