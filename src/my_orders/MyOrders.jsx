@@ -4,7 +4,6 @@ import { getRegions } from "../api/UrlApi";
 import "./Order.css";
 import ReactLoading from "react-loading";
 import { StorageContext, TokensContext } from "../context/Context";
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import { CategoriesContext } from "../context/Context";
 import FormAddress from "./FormAddress";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,20 +11,7 @@ import ProductList from "./ProductList";
 import HorizontalLinearStepper from "./Stepper";
 import { Redirect } from "react-router";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#245462",
-    },
-    secondary: {
-      main: "rgb(2, 91, 130)",
-    },
-  },
-  typography: {
-    fontFamily: ["Poppins"].join(","),
-  },
-});
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   typography: {
     color: theme.palette.secondary.main,
   },
@@ -162,7 +148,7 @@ const useStyles = makeStyles({
       fontSize: "17px",
     },
   },
-});
+}));
 
 export default function MyOrders() {
   const classes = useStyles();
@@ -212,8 +198,7 @@ export default function MyOrders() {
   if (refreshToken) {
     return <Redirect to="/user/sign_in" />
   }
-    return (
-      <MuiThemeProvider theme={theme}>
+    return (     
         <Box>
           <Box className={classes.section} boxShadow={1}>
             <div className={classes.stepper}>
@@ -271,7 +256,7 @@ export default function MyOrders() {
                           justifyContent: "center",
                           height: "100%",
                           width: "100%",
-                          color: theme.palette.error.main,
+                          color: "red",
                         }}
                       >
                         Not found !
@@ -327,6 +312,5 @@ export default function MyOrders() {
             </Grid>
           </Box>
         </Box>
-      </MuiThemeProvider>
     );
 }

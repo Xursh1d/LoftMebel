@@ -13,6 +13,7 @@ import Categories from "./homePage/Categories";
 import Input from "./homePage/Input";
 import { useContext } from "react";
 import WishlistProducts from "./wishlist/WishlistProducts";
+import Contact from "./homePage/contact/Contact";
 
 export default function Basket() {
   const { categories } = useContext(CategoriesContext);
@@ -50,6 +51,7 @@ export default function Basket() {
         palceholder={"Search"}
       />
       <Categories categories={categories} />
+      <Contact/>
       <Footer categories={categories} />
     </div>
   );
