@@ -1,0 +1,13 @@
+.map {
+  width: 100%;
+  height: 370px;
+}
+.placemark{
+  border: 1px solid red;
+}
+@media screen and (max-width: 767px) {
+  .map {
+    height: 250px;
+    margin-bottom: 20px;
+  }
+}

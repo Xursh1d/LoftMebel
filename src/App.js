@@ -7,6 +7,7 @@ import Term from "./Term";
 import Contact from "./Contact";
 import ScrollTop from "./scroll_top/ScrollTop";
 import CategoryItems from "./СategoryItems";
+import About from "./About"
 import "typeface-kanit";
 import {
   ActiveSlideContext,
@@ -28,6 +29,7 @@ import {
 import SignUp from "./profile/SignUp";
 import SignIn from "./profile/SignIn";
 import MyOrders from "./my_orders/MyOrders";
+import Profile from "./Profile"
 import { isJwtExpired } from "jwt-check-expiration";
 
 function App() {
@@ -156,12 +158,14 @@ function App() {
                           value={[refreshToken, setRefreshToken]}
                         >
                           <Switch>
-                            <Route path="/" exact component={Home} />
+                            <Route path="/" exact component={Home}/>
+                            <Route path="/contact" component={Contact} />
+                            <Route path="/about" component={About}/>
+                            <Route path="/profile" component={Profile}/>
                             <Route
                               path="/product_card/:slug"
                               component={ProductCard}
                             />
-                            <Route path="/contact" component={Contact} />
                             <Route path="/basket" component={Basket} />
                             <Route
                               path="/category/:slug"
@@ -170,8 +174,7 @@ function App() {
                             <Route path="/search/:slug" component={Term} />
                             <Route path="/user/sign_in" component={SignIn} />
                             <Route path="/user/sign_up" component={SignUp} />
-                            <Route path="/my_orders" component={MyOrders}/>
-                            
+                            <Route path="/my_orders" component={MyOrders}/>                            
                           </Switch>
                         </TokensContext.Provider>
                       </ChangeSearchContext.Provider>

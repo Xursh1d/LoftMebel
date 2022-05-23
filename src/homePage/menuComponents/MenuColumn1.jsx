@@ -12,7 +12,7 @@ export default function MenuColumn1() {
           {" "}
           <HiOutlineHome className="homeIcon" /> Home
         </Link>
-        <Link to="/logo">
+        <Link to="/about">
           <IoInformationSharp className="aboutIcon" /> About Us
         </Link>
         <Link to="/contact">

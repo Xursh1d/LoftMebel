@@ -16,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    },
+  },
+  row2: {
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      marginTop:"-28px"
+    },
   },
   massage: {
     width: "100%",
@@ -58,16 +69,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    fontFamily: "Roboto",
+    fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: 400,
     fontSize: "18px",
     lineHeight: "19px",
     color: "#414141",
     marginBottom: "30px",
+    color: "#414141",
+    [theme.breakpoints.down("sm")]:{
+      fontSize: "15px",
+    lineHeight: "16px",
+    color: "#414141",
+    marginBottom: "30px",
+    }
   },
   container: {
     marginTop: "50px",
+    [theme.breakpoints.down("sm")]:{
+      marginTop:"10px"
+    }
   },
   btns: {
     width: "100%",
@@ -85,6 +106,9 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "none",
       marginBottom: "20px",
     },
+    [theme.breakpoints.down("sm")]:{
+      display:"none"
+    }
   },
   span: {
     fontFamily: "Roboto",
@@ -95,14 +119,21 @@ const useStyles = makeStyles((theme) => ({
     color: "#414141",
     marginLeft: "10px",
   },
-  contactItem: {},
+  contactItem: {
+    [theme.breakpoints.down("sm")]:{
+      display:"none"
+    }
+  },
+  yandexmap: {
+    marginTop: "40px",
+  },
 }));
 export default function Contact() {
   const classes = useStyles();
   return (
     <>
       <Grid container spacing={3} className={classes.container}>
-        <Grid item xs={12} lg={6} className={classes.inputSpace}>
+        <Grid item xs={12} lg={6} md={6} className={classes.inputSpace}>
           <Typography className={classes.title}>Contact us</Typography>
           <form className={classes.root} noValidate autoComplete="off">
             <div className={classes.row1} style={{ marginBottom: "30px" }}>
@@ -135,7 +166,7 @@ export default function Contact() {
                 }}
               />
             </div>
-            <div className={classes.row1}>
+            <div className={classes.row2}>
               <TextField
                 className={classes.massage}
                 id="outlined-multiline-static"
@@ -152,26 +183,27 @@ export default function Contact() {
                 }}
               />
             </div>
+            <div className={classes.btns}>
+              <Button
+                type="file"
+                variant="contained"
+                style={{ marginRight: "20px" }}
+              >
+                Attach file
+              </Button>
+              <Button type="submit" variant="contained" color="primary">
+                Send
+              </Button>
+            </div>
           </form>
-          <div className={classes.btns}>
-            <Button variant="contained" style={{ marginRight: "20px" }}>
-              Attach file
-            </Button>
-            <Button variant="contained" color="primary">
-              Send
-            </Button>
-          </div>
         </Grid>
-        <Grid item xs={12} lg={6} className={classes.contactItem}>
+        <Grid item xs={12} lg={6} md={6} className={classes.contactItem}>
           <div className={classes.contactWith}>
-            <a href="tel:+998911705909">
+            <a href="tel:+998911705909" style={{ marginRight: "30px" }}>
               <img src={phone} alt="" />
               <span className={classes.span}>+998 91 170 59 09</span>
             </a>
-            <a
-              style={{ marginLeft: "30px" }}
-              href="mailto:xurshidforjob@gmail.com"
-            >
+            <a href="mailto:xurshidforjob@gmail.com">
               <img src={mail} alt="" />
               <span className={classes.span}>xurshidforjob@gmail.com</span>
             </a>
@@ -185,9 +217,9 @@ export default function Contact() {
           </span>
         </Grid>
       </Grid>
-      <Box>
-        <Typography>Our company address</Typography>
-        <YandexMap/>
+      <Box className={classes.yandexmap}>
+        <Typography className={classes.title}>Our company address</Typography>
+        <YandexMap />
       </Box>
     </>
   );

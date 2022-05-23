@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Grid, Typography} from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { getRegions } from "../api/UrlApi";
 import "./Order.css";
 import ReactLoading from "react-loading";
@@ -196,121 +196,127 @@ export default function MyOrders() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   if (refreshToken) {
-    return <Redirect to="/user/sign_in" />
+    return <Redirect to="/user/sign_in" />;
   }
-    return (     
-        <Box>
-          <Box className={classes.section} boxShadow={1}>
-            <div className={classes.stepper}>
-              <div className={classes.typographyIndex}>
-                <Typography className={classes.typography} variant="caption">
-                  Shipping Address
-                </Typography>
-                <p className="product-adress" style={{ marginTop: 10 }}>
-                  Home / Basket / Shipping address
-                </p>
-              </div>
-              <HorizontalLinearStepper
-                isStepSkipped={isStepSkipped}
-                activeStep={activeStep}
-                setActiveStep={setActiveStep}
-                skipped={skipped}
-                setSkipped={setSkipped}
-                className={classes.positionStep}
-              />
-            </div>
-            <Grid container spacing={3} style={{ marginTop: "20px" }}>
-              <Grid className={classes.formaddress} item xs={12} md={12} lg={7}>
-                <FormAddress
-                  cartStorage={cartStorage}
-                  regions={regions}
-                  district={district}
-                  handleChangeRegions={handleChangeRegions}
-                  handleNext={handleNext}
-                />
-              </Grid>
-              <Grid item className={classes.products} xs={12} md={10} lg={5}>
-                <Box style={{ display: "flex", flexDirection: "column" }}>
+  return loading ? (
+    <div className="loader">
+      <h6>Loading</h6>
+      <ReactLoading
+        className="loading"
+        type={"spinningBubbles"}
+        color={"#245462"}
+        height={"50px"}
+        width={"50px"}
+      />
+    </div>
+  ) : (
+    <Box>
+      <Box className={classes.section} boxShadow={1}>
+        <div className={classes.stepper}>
+          <div className={classes.typographyIndex}>
+            <Typography className={classes.typography} variant="caption">
+              Shipping Address
+            </Typography>
+            <p className="product-adress" style={{ marginTop: 10 }}>
+              Home / Basket / Shipping address
+            </p>
+          </div>
+          <HorizontalLinearStepper
+            isStepSkipped={isStepSkipped}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            skipped={skipped}
+            setSkipped={setSkipped}
+            className={classes.positionStep}
+          />
+        </div>
+        <Grid container spacing={3} style={{ marginTop: "20px" }}>
+          <Grid className={classes.formaddress} item xs={12} md={12} lg={7}>
+            <FormAddress
+              cartStorage={cartStorage}
+              regions={regions}
+              district={district}
+              handleChangeRegions={handleChangeRegions}
+              handleNext={handleNext}
+            />
+          </Grid>
+          <Grid item className={classes.products} xs={12} md={10} lg={5}>
+            <Box style={{ display: "flex", flexDirection: "column" }}>
+              <Typography
+                variant="subtitle2"
+                style={{
+                  fontSize: "17px",
+                  textAlign: "center",
+                  marginBottom: "15px",
+                }}
+              >
+                Your order
+              </Typography>
+              <Box className={classes.productsList} boxShadow={1}>
+                {cartStorage.length ? (
+                  <ProductList
+                    cartStorage={cartStorage}
+                    removeLocalStorage={removeLocalStorage}
+                  />
+                ) : (
                   <Typography
-                    variant="subtitle2"
+                    variant="h6"
                     style={{
-                      fontSize: "17px",
-                      textAlign: "center",
-                      marginBottom: "15px",
+                      display: "flex",
+                      lineHeight: "40px",
+                      justifyContent: "center",
+                      height: "100%",
+                      width: "100%",
+                      color: "red",
                     }}
                   >
-                    Your order
+                    Not found !
                   </Typography>
-                  <Box className={classes.productsList} boxShadow={1}>
-                    {cartStorage.length ? (
-                      <ProductList
-                        cartStorage={cartStorage}
-                        removeLocalStorage={removeLocalStorage}
-                      />
-                    ) : (
-                      <Typography
-                        variant="h6"
-                        style={{
-                          display: "flex",
-                          lineHeight: "40px",
-                          justifyContent: "center",
-                          height: "100%",
-                          width: "100%",
-                          color: "red",
-                        }}
-                      >
-                        Not found !
-                      </Typography>
-                    )}
-                  </Box>
+                )}
+              </Box>
+            </Box>
+            <Box>
+              <Box className={classes.totalCost} boxShadow={1}>
+                <Typography variant="subtitle2" className={classes.orderTitle}>
+                  Order Summary
+                </Typography>
+                <Box className={classes.productSum} borderBottom={0}>
+                  <Typography className={classes.cost}>Subtotal</Typography>
+                  <Typography className={classes.cost}>{allSum} $</Typography>
                 </Box>
-                <Box>
-                  <Box className={classes.totalCost} boxShadow={1}>
-                    <Typography
-                      variant="subtitle2"
-                      className={classes.orderTitle}
-                    >
-                      Order Summary
-                    </Typography>
-                    <Box className={classes.productSum} borderBottom={0}>
-                      <Typography className={classes.cost}>Subtotal</Typography>
-                      <Typography className={classes.cost}>
-                        {allSum} $
-                      </Typography>
-                    </Box>
-                    <Box className={classes.productSum} borderBottom={0}>
-                      <Typography className={classes.cost}>Shipping</Typography>
-                      <Typography className={classes.cost}>0 $</Typography>
-                    </Box>
-                    <Box
-                      borderTop={1}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        height: "40px",
-                        width: "100%",
-                        marginTop: "15px",
-                      }}
-                    >
-                      <Typography
-                        variant="subtitle2"
-                        className={classes.orderTotal}
-                      >
-                        Order total
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        className={classes.orderTotal}
-                      >
-                        {allSum} $
-                      </Typography>
-                    </Box>
-                  </Box>
+                <Box className={classes.productSum} borderBottom={0}>
+                  <Typography className={classes.cost}>Shipping</Typography>
+                  <Typography className={classes.cost}>0 $</Typography>
                 </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-    );
+                <Box
+                  borderTop={1}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    height: "40px",
+                    width: "100%",
+                    marginTop: "15px",
+                  }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    className={classes.orderTotal}
+                  >
+                    Order total
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    className={classes.orderTotal}
+                  >
+                    {allSum} $
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  );
 }

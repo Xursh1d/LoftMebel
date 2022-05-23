@@ -9,6 +9,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import StorageIcon from "@material-ui/icons/Storage";
+import { Link } from "react-router-dom";
 const theme = createTheme({
   palette: {
     primary: {
@@ -31,11 +32,11 @@ const useStyles = makeStyles({
       fontSize: "14px",
     },
   },
-  icons:{
+  icons: {
     [theme.breakpoints.down("sm")]: {
-        fontSize: "22px",
-      },
-  }
+      fontSize: "22px",
+    },
+  },
 });
 export default function SimpleMenu({ setRefreshToken }) {
   const classes = useStyles();
@@ -73,21 +74,31 @@ export default function SimpleMenu({ setRefreshToken }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <ListItemIcon style={{ minWidth: "0px", marginRight: "10px" }}>
-            <PersonIcon className={classes.icons}/>
-          </ListItemIcon>
-          Profile
-        </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <ListItemIcon style={{ minWidth: "0px", marginRight: "10px" }}>
-            <StorageIcon className={classes.icons} />
-          </ListItemIcon>
-          My orders
-        </MenuItem>
+        <Link
+          style={{ textDecoration: "none", color: "#414141" }}
+          to="/profile"
+        >
+          <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <ListItemIcon style={{ minWidth: "0px", marginRight: "10px" }}>
+              <PersonIcon className={classes.icons} />
+            </ListItemIcon>
+            Profile
+          </MenuItem>
+        </Link>
+        <Link
+          style={{ textDecoration: "none", color: "#414141" }}
+          to="/profile"
+        >
+          <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <ListItemIcon style={{ minWidth: "0px", marginRight: "10px" }}>
+              <StorageIcon className={classes.icons} />
+            </ListItemIcon>
+            My orders
+          </MenuItem>
+        </Link>
         <MenuItem className={classes.menuItem} onClick={removeStorage}>
           <ListItemIcon style={{ minWidth: "0px", marginRight: "10px" }}>
-            <ExitToAppIcon className={classes.icons}/>
+            <ExitToAppIcon className={classes.icons} />
           </ListItemIcon>
           Logout
         </MenuItem>
