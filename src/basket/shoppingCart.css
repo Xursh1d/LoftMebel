@@ -9,15 +9,13 @@ a {
   padding: 0;
   margin: 0;
 }
-.empty_text {
-  font-size: 25px;
-  font-family: Roboto;
-  color: #af527e;
-  margin: 30px 0;
-  text-align: center;
-  font-weight: normal;
-}
 @media screen and (min-width: 1250px) {
+  .empty_text {
+    width: 30% !important;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;
@@ -242,6 +240,12 @@ a {
   }
 }
 @media (min-width: 1030px) and (max-width: 1249px) {
+  .empty_text {
+    width: 30% !important;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;
@@ -466,6 +470,12 @@ a {
   }
 }
 @media (min-width: 768px) and (max-width: 1029px) {
+  .empty_text {
+    width: 50% !important;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;
@@ -690,6 +700,12 @@ a {
   }
 }
 @media (min-width: 576px) and (max-width: 767px) {
+  .empty_text {
+    width: 60%;
+    margin:0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;
@@ -917,6 +933,12 @@ a {
   }
 }
 @media (min-width: 450px) and (max-width: 575px) {
+  .empty_text {
+    width: 70%;
+    margin:0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;
@@ -1161,6 +1183,12 @@ a {
   }
 }
 @media (min-width: 320px) and (max-width: 449px) {
+  .empty_text {
+    width: 70%;
+    margin:0 auto !important;
+    display: flex;
+    justify-content: center;
+  }
   .basket-product {
     width: 100%;
     display: flex;

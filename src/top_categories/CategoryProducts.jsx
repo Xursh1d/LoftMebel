@@ -5,7 +5,9 @@ import { photoUrl } from "../helpers/photo_url_fixer";
 import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import { useContext } from "react";
+import "../homePage/Home.css"
 import { StorageContext, WishlistContext } from "../context/Context";
+import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg"
 export default function CategoryProducts({ categoryIteam, slug }) {
   const { likedProduct, setLikedProduct } = useContext(WishlistContext);
   const { cartStorage, setCartStorage } = useContext(StorageContext);
@@ -171,7 +173,7 @@ export default function CategoryProducts({ categoryIteam, slug }) {
           })}
         </section>
       ) : (
-        <h6 className="empty_text">No products</h6>
+        <img src={emptyIcon} className="empty_icon"/>
       )}
     </>
   );

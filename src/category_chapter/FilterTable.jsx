@@ -147,7 +147,7 @@ export default function FilterTable({
               onClick={() => setShowMore(!showMore)}
               className={sizes.length > 6 ? "size_show_more" : "show_more_none"}
             >
-              Show more...
+             {showMore? "Show less" : "Show more"}
             </p>
           </>
         ) : (

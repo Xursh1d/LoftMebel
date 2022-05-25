@@ -422,7 +422,7 @@ export default function MyProfile() {
                 </td>
                 <td className={classes.td}>1234</td>
                 <td className={classes.td}>12/02/2022</td>
-                <td className={classes.td}>Paid 50%</td>
+                <td className={classes.td}>To'lov qilingan</td>
               </tr>
             </table>
             <Typography variant="subtitle1" className={classes.showmore}>

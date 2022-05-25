@@ -4,14 +4,15 @@ import Menu from "./homePage/Menu";
 import LogoSearch from "./homePage/LogoSearch";
 import Categories from "./homePage/Categories";
 import MenuBar from "./homePage/menuComponents/MenuBar";
+import emptyIcon from "./LoftMebelPhoto/page-empty-page.jpg"
 import {
   CategoriesContext,
   MenuContext,
   SliderContext,
   ActiveSlideContext,
-  TopProductContext,
   ChangeSearchContext,
   WishlistContext,
+  TopProductContext
 } from "./context/Context";
 import { useContext } from "react";
 import Input from "./homePage/Input";
@@ -24,9 +25,9 @@ import WishlistProducts from "./wishlist/WishlistProducts";
 export default function Home() {
   const { categories, getCategoryId, loading } = useContext(CategoriesContext);
   const { slider } = useContext(SliderContext);
+  const { topProduct} = useContext(TopProductContext);
   const [menuBar, setMenuBar] = useContext(MenuContext);
   const [activeSlide, setActiveSlide] = useContext(ActiveSlideContext);
-  const { topProduct, categoryId } = useContext(TopProductContext);
   const { setWishlist, setActiveProfile } = useContext(WishlistContext);
   const { setSearch, setChangeSearch, search } =
     useContext(ChangeSearchContext);
@@ -80,9 +81,9 @@ export default function Home() {
         setActiveSlide={setActiveSlide}
       />
       {topProduct.length ? (
-        <BestSellers topProduct={topProduct} categoryId={categoryId} />
+        <BestSellers/>
       ) : (
-        <h6 className="empty_text">No product in this category</h6>
+        <img src={emptyIcon} className="empty_text"/>
       )}
       <Footer categories={categories} getCategoryId={getCategoryId} />
     </div>

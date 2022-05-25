@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Menu from "./homePage/Menu";
 import MenuBar from "./homePage/menuComponents/MenuBar";
 import LogoSearch from "./homePage/LogoSearch";
+import ReactLoading from "react-loading";
+
 import {
   CategoriesContext,
   MenuContext,
@@ -16,7 +18,7 @@ import WishlistProducts from "./wishlist/WishlistProducts";
 import Contact from "./homePage/contact/Contact";
 
 export default function Basket() {
-  const { categories } = useContext(CategoriesContext);
+  const { categories,loading } = useContext(CategoriesContext);
   const { setWishlist, setActiveProfile } = useContext(WishlistContext);
   const { search, setSearch, setChangeSearch } =
     useContext(ChangeSearchContext);
@@ -29,7 +31,18 @@ export default function Basket() {
   useEffect(() => {
     setSearch([]);
   }, []);
-  return (
+  return loading ? (
+    <div className="loader">
+      <h6>Loading</h6>
+      <ReactLoading
+        className="loading"
+        type={"spinningBubbles"}
+        color={"#245462"}
+        height={"50px"}
+        width={"50px"}
+      />
+    </div>
+  ) : (
     <div onClick={() => handleCloseMenu()}>
       <MenuBar
         categories={categories}

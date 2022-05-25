@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: "100%",
-    height: "100%",
+    height:"80px",
     margin: "0",
+    marginRight:"15px !important"
   },
   img: {
     display: "block",
@@ -81,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     },
     padding: "0",
   },
+  imgGrid:{
+    // marginRight:"5px"
+  }
 }));
 export default function ProductList({ cartStorage, removeLocalStorage }) {
   const classes = useStyles();
@@ -103,7 +107,7 @@ export default function ProductList({ cartStorage, removeLocalStorage }) {
         } = item;
         return (
           <Grid container key={id} spacing={2} className={classes.paper}>
-            <Grid xs={4} style={{ paddingRight: "3px" }} item>
+            <Grid xs={4}  className={classes.imgGrid} item>
               <Link to={`/product_card/${productId}`}>
                 <ButtonBase className={classes.image}>
                   <img

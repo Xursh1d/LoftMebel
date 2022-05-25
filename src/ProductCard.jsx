@@ -1,6 +1,7 @@
 import Menu from "./homePage/Menu";
 import MenuBar from "./homePage/menuComponents/MenuBar";
 import LogoSearch from "./homePage/LogoSearch";
+import emptyIcon from "./LoftMebelPhoto/page-empty-page.jpg"
 import {
   CategoriesContext,
   MenuContext,
@@ -91,7 +92,7 @@ export default function ProductCard() {
       {topProduct.length ? (
         <BestSellers topProduct={topProduct} categoryId={categoryId} />
       ) : (
-        <h6 className="empty_text">No product in this category</h6>
+        <img src={emptyIcon} className="empty_text"/>
       )}
       <Footer categories={categories} />
     </div>

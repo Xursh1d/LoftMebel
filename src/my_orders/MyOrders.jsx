@@ -7,6 +7,7 @@ import { StorageContext, TokensContext } from "../context/Context";
 import { CategoriesContext } from "../context/Context";
 import FormAddress from "./FormAddress";
 import { makeStyles } from "@material-ui/core/styles";
+import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg";
 import ProductList from "./ProductList";
 import HorizontalLinearStepper from "./Stepper";
 import { Redirect } from "react-router";
@@ -148,6 +149,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "17px",
     },
   },
+  emptyImg:{
+    width:"100%"
+  }
 }));
 
 export default function MyOrders() {
@@ -259,19 +263,7 @@ export default function MyOrders() {
                     removeLocalStorage={removeLocalStorage}
                   />
                 ) : (
-                  <Typography
-                    variant="h6"
-                    style={{
-                      display: "flex",
-                      lineHeight: "40px",
-                      justifyContent: "center",
-                      height: "100%",
-                      width: "100%",
-                      color: "red",
-                    }}
-                  >
-                    Not found !
-                  </Typography>
+                  <img className={classes.emptyImg} src={emptyIcon} alt="" />
                 )}
               </Box>
             </Box>

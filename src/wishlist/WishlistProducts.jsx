@@ -5,6 +5,8 @@ import { MdDelete } from "react-icons/md";
 import { useContext } from "react";
 import { WishlistContext } from "../context/Context";
 import { Link } from "react-router-dom";
+import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg"
+import { photoUrl } from "../helpers/photo_url_fixer";
 
 export default function WishlistProducts() {
   const { wishlist, setWishlist, likedProduct, setLikedProduct } =
@@ -45,7 +47,7 @@ export default function WishlistProducts() {
                   to={`/product_card/${slug}`}
                   className="img_product"
                 >
-                  <img src={photo} alt="" />
+                  <img src={photoUrl(photo)} alt="" />
                 </Link>
                 <div className="product_title">
                   <h1>{title}</h1>
@@ -68,7 +70,7 @@ export default function WishlistProducts() {
           })}
         </ul>
         <div className={!likedProduct.length ? "no_result" : "none"}>
-          <h1>No results</h1>
+          <img src={emptyIcon} alt="" />
         </div>
       </section>
     </div>

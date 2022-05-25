@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { photoUrl } from "../helpers/photo_url_fixer";
 import "./Card.css";
 import SliderSwipe from "./SliderSwipe";
-import heart from ".././LoftMebelPhoto/heart.svg";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
 import StarRating from "./StarRating";
 import { TiPlus } from "react-icons/ti";
 import { TiMinus } from "react-icons/ti";
 import Fade from "react-reveal/Fade";
-import { StorageContext } from "../context/Context";
+import { WishlistContext, StorageContext } from "../context/Context";
 
 export default function EachProductCard({
   productCard,
@@ -16,6 +16,7 @@ export default function EachProductCard({
   childPhoto,
   categories,
 }) {
+  const { likedProduct, setLikedProduct } = useContext(WishlistContext);
   const { cartStorage, setCartStorage } = useContext(StorageContext);
   const { height, width, length } = productCard.size[0];
   const firstSelect = `${height} sm × ${width} sm × ${length} sm`;
@@ -25,6 +26,7 @@ export default function EachProductCard({
   const [quantity, setQuantity] = useState(1);
   const [selectSize, setSelectSize] = useState();
   const [productColor, setProductColor] = useState([]);
+
   useEffect(() => {
     setSelectSize(firstSelect);
     setProductColor(productCard.color[0]);
@@ -88,8 +90,27 @@ export default function EachProductCard({
   const handelChangePhoto = (image) => {
     setChildPhoto(image);
   };
-  const { id,category, title, color, size, description, price, characteristics } =
-    productCard;
+  const handelWishlistStorage = (item) => {
+    const findID = likedProduct.find((i) => i.id === item.id);
+    const filterItem = likedProduct.filter((i) => i.id !== item.id);
+    if (findID) {
+      setLikedProduct(filterItem);
+    } else {
+      setLikedProduct([...likedProduct, item]);
+    }
+  };
+  const {
+    id,
+    category,
+    title,
+    color,
+    size,
+    description,
+    price,
+    characteristics,
+  } = productCard;
+
+  const findID = likedProduct.find((i) => i.id === id);
 
   let filterCategories = "";
   categories.forEach((element) => {
@@ -137,8 +158,18 @@ export default function EachProductCard({
               Add to cart
             </button>
             <div className="add-to-desired">
-              <img src={heart} alt="" />
-              <p>Add to Desired</p>
+              <span
+                className="product_heart_icon"
+                onClick={() => handelWishlistStorage(productCard)}
+              >
+                <IoHeartOutline className="heart_outline" />
+                <IoHeart
+                  className={findID ? "heartIcon open_like" : "heartIcon"}
+                />
+              </span>
+              <p style={{cursor:"pointer"}} onClick={() => handelWishlistStorage(productCard)}>
+                Add to Desired
+              </p>
             </div>
           </div>
           <div className="color-size">

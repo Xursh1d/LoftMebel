@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   row2: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      marginTop:"-28px"
+      marginTop: "-28px",
     },
   },
   massage: {
@@ -77,18 +77,18 @@ const useStyles = makeStyles((theme) => ({
     color: "#414141",
     marginBottom: "30px",
     color: "#414141",
-    [theme.breakpoints.down("sm")]:{
+    [theme.breakpoints.down("sm")]: {
       fontSize: "15px",
-    lineHeight: "16px",
-    color: "#414141",
-    marginBottom: "30px",
-    }
+      lineHeight: "16px",
+      color: "#414141",
+      marginBottom: "30px",
+    },
   },
   container: {
     marginTop: "50px",
-    [theme.breakpoints.down("sm")]:{
-      marginTop:"10px"
-    }
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "10px",
+    },
   },
   btns: {
     width: "100%",
@@ -105,10 +105,25 @@ const useStyles = makeStyles((theme) => ({
     "& a": {
       textDecoration: "none",
       marginBottom: "20px",
+      " & :hover": {
+        color: "#245456",
+      },
     },
-    [theme.breakpoints.down("sm")]:{
-      display:"none"
-    }
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      margin: "0",
+      "& a": {
+        " & :hover": {
+          color: "#245456",
+        },
+        textDecoration: "none",
+        marginBottom: "10px",
+        marginRight: "30px",
+        "& img": {
+          width: "19px",
+        },
+      },
+    },
   },
   span: {
     fontFamily: "Roboto",
@@ -118,14 +133,50 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "126.69%",
     color: "#414141",
     marginLeft: "10px",
+    marginRight: "30px",
+    [theme.breakpoints.down("sm")]: {
+      fontFamily: "Roboto",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "15px",
+      lineHeight: "126.69%",
+      color: "#414141",
+      marginLeft: "10px",
+      marginRight: "30px",
+    },
+  },
+  anapa: {
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "0px",
+      fontFamily: "Roboto",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "15px",
+      lineHeight: "126.69%",
+      color: "#414141",
+      width: "100%",
+      display: "flex",
+      justifyContent: "flex-start",
+      marginTop: "5px",
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "0px",
+    },
+    [theme.breakpoints.up("md")]: {
+      marginLeft: "40px",
+    },
   },
   contactItem: {
-    [theme.breakpoints.down("sm")]:{
-      display:"none"
-    }
+    [theme.breakpoints.down("sm")]: {
+      margin: "20px 0",
+      width: "100%",
+    },
   },
   yandexmap: {
     marginTop: "40px",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "20px",
+    },
   },
 }));
 export default function Contact() {
@@ -199,7 +250,7 @@ export default function Contact() {
         </Grid>
         <Grid item xs={12} lg={6} md={6} className={classes.contactItem}>
           <div className={classes.contactWith}>
-            <a href="tel:+998911705909" style={{ marginRight: "30px" }}>
+            <a href="tel:+998911705909">
               <img src={phone} alt="" />
               <span className={classes.span}>+998 91 170 59 09</span>
             </a>
@@ -212,7 +263,7 @@ export default function Contact() {
               <span className={classes.span}>INSTAGRAM</span>
             </a>
           </div>
-          <span className={classes.span} style={{ marginLeft: "40px" }}>
+          <span className={classes.anapa}>
             Anapa, Anapa highway, 30 L/C Black Sea
           </span>
         </Grid>

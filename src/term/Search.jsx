@@ -5,6 +5,7 @@ import Fade from "react-reveal/Fade";
 import { photoUrl } from "../helpers/photo_url_fixer";
 import stock from "../LoftMebelPhoto/stock.svg";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg"
 import { useContext } from "react";
 import { StorageContext, WishlistContext } from "../context/Context";
 export default function Search({ searchProducts }) {
@@ -172,7 +173,7 @@ export default function Search({ searchProducts }) {
             );
           })
         ) : (
-          <h6 className="empty_text">No products</h6>
+          <img src={emptyIcon} className="empty_text"/>
         )}
       </section>
     </div>
