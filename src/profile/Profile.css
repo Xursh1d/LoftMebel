@@ -1,3 +1,16 @@
+
+.upload_file_name{
+  position: absolute;
+  right:0px;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-transform: none;
+  justify-content: end;
+  opacity: 0.8;
+  font-size: 12px;
+}
 @media screen and (min-width: 1250px) {
   .toastBody {
     font-family: Poppins;
@@ -10,6 +23,14 @@
   .toast_warn {
     background: #f1c40f !important;
     color: #ffffff !important;
+  }
+  .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;
@@ -463,6 +484,13 @@
   .toast_warn {
     background: #f1c40f !important;
     color: #ffffff !important;
+  } .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;
@@ -916,6 +944,13 @@
   .toast_warn {
     background: #f1c40f !important;
     color: #ffffff !important;
+  } .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;
@@ -1395,6 +1430,13 @@
   .toast_warn {
     background: #f1c40f !important;
     color: #ffffff !important;
+  } .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;
@@ -1853,6 +1895,13 @@
     background: rgba(255, 146, 0, 0.7) !important;
     color: #ffffff !important;
     margin: 10px 22px !important;
+  } .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;
@@ -2317,6 +2366,14 @@
     background: rgba(255, 146, 0, 0.7) !important;
     color: #ffffff !important;
     margin: 10px 20px !important;
+  }
+  .toast_success{
+    background: #02a024 !important;
+    color: #ffffff !important;
+  }
+  .Toastify__progress-bar--success{
+    background: #7ff78f !important;
+
   }
   .Toastify__progress-bar--warning {
     background: #f5fc9a !important;

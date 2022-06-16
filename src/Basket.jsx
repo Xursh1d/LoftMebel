@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Menu from "./homePage/Menu";
 import MenuBar from "./homePage/menuComponents/MenuBar";
 import LogoSearch from "./homePage/LogoSearch";
@@ -17,7 +17,7 @@ import ShopProduct from "./basket/ShopProduct";
 import LastProducts from "./basket/LastProducts";
 import { getLatestProducts } from "./api/UrlApi";
 import WishlistProducts from "./wishlist/WishlistProducts";
-
+export const LastProductsContext=createContext(null);
 export default function Basket() {
   const { categories, loading, setLoading } = useContext(CategoriesContext);
   const { setWishlist, setActiveProfile } = useContext(WishlistContext);
@@ -25,12 +25,16 @@ export default function Basket() {
     useContext(ChangeSearchContext);
   const [menuBar, setMenuBar] = useContext(MenuContext);
   const [lastProducts, setLastProducts] = useState([]);
+  const [noMore,setNoMore]=useState(true)
   useEffect(() => {
     setLoading(true);
-    getLatestProducts().then((getProducts) => {
-      setLastProducts(getProducts.data);
+    getLatestProducts(1).then((getProducts) => {
+      setLastProducts(getProducts.data.results);
       setLoading(false);
       setSearch([]);
+      if (getProducts.data.results.length<12) {
+        setNoMore(false)
+      }
     });
   }, []);
   const handleCloseMenu = () => {
@@ -51,6 +55,7 @@ export default function Basket() {
     </div>
   ) : (
     <div onClick={() => handleCloseMenu()}>
+      <LastProductsContext.Provider value={{setLastProducts,noMore,setNoMore}}>
       <MenuBar
         categories={categories}
         menuBar={menuBar}
@@ -75,6 +80,7 @@ export default function Basket() {
       <ShopProduct />
       <LastProducts lastProducts={lastProducts} />
       <Footer categories={categories} />
+      </LastProductsContext.Provider>
     </div>
   );
 }

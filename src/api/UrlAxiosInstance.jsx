@@ -6,7 +6,6 @@ const getAccess = JSON.parse(localStorage.getItem("access"));
 console.log(getAccess);
 export const likeAxiosInstance = axios.create({
   baseURL,
-  // timeout: 5000,
   headers: {
     Authorization: `Bearer ${getAccess}`,
     "Content-Type": "application/json",

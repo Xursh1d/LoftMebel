@@ -16,6 +16,7 @@ import { useContext } from "react";
 import WishlistProducts from "./wishlist/WishlistProducts";
 import Contact from "./homePage/contact/Contact";
 import MyProfile from "./my_profile/MyProfile";
+import { userData } from "./api/UrlApi";
 
 export default function Basket() {
   const { categories } = useContext(CategoriesContext);
@@ -30,6 +31,9 @@ export default function Basket() {
   };
   useEffect(() => {
     setSearch([]);
+    userData().then((response)=>{
+      console.log(response);
+    })
   }, []);
   return (
     <div onClick={() => handleCloseMenu()}>

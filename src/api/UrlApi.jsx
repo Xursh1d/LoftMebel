@@ -1,5 +1,5 @@
 import { axiosInstance } from "./AxiosInstance";
-
+import { likeAxiosInstance } from "./UrlAxiosInstance";
 export const getCategories = async () => {
   const categorie = await axiosInstance.get("/categories/");
   return categorie;
@@ -17,10 +17,14 @@ export const getTopProducts = async () => {
   const products = await axiosInstance.get("/products/top/");
   return products;
 };
-export const getTopCategoryItem = async (slug, min, max, color, size) => {
-  const category = await axiosInstance.get(
-    `/categories/${slug}/products/?min_price=${min}&max_price=${max}&colors=${color}&size=${size}`
-  );
+export const getTopPagnationProducts = async (page) => {
+  const response = await axiosInstance.get(`/products/top/?page=${page}`);
+  return response;
+};
+
+export const getTopCategoryItem = async (slug, min, max, color, size, page) => {
+  const url = `/categories/${slug}/products/?min_price=${min}&max_price=${max}&colors=${color}&size=${size}&page=${page}`;
+  const category = await axiosInstance.get(url);
   return category;
 };
 export const getTopDiscountItem = async () => {
@@ -39,8 +43,8 @@ export const getFilterCategorySize = async (slug) => {
   const getSize = await axiosInstance.get(`/size/?category=${slug}`);
   return getSize;
 };
-export const getLatestProducts = async () => {
-  const getProducts = await axiosInstance.get(`/products/latest`);
+export const getLatestProducts = async (page) => {
+  const getProducts = await axiosInstance.get(`/products/latest/?page=${page}`);
   return getProducts;
 };
 export const getSearchProduct = async (title) => {
@@ -61,22 +65,13 @@ export const checkOtpCode = async (email, token, code) => {
   });
   return postOtpCode;
 };
-export const createAccount = async (
-  token,
-  fullname,
-  phone,
-  password,
-  gender,
-  photo
-) => {
-  const response = await axiosInstance.post("/sign-up/", {
-    token: token,
-    fullname: fullname,
-    phone: phone,
-    password: password,
-    gender: gender,
-    photo: photo,
+export const createAccount = async (data) => {
+  const response = await axiosInstance.post("/sign-up/", data, {
+    headers: {
+      "Content-type": "multipart/form-data",
+    },
   });
+
   return response;
 };
 export const checkUserName = async (username, password) => {
@@ -86,16 +81,22 @@ export const checkUserName = async (username, password) => {
   });
   return response;
 };
+export const feedback = async (data) => {
+  const response = await axiosInstance.post("/feedback/", data, {
+    headers: {
+      "Content-type": "multipart/form-data",
+    },
+  });
+  return response;
+};
 export const getRegions = async () => {
   const response = await axiosInstance.get(`/regions`);
   return response;
 };
-// export const likeProduct = async (_id) => {
-//   const response = await likeAxiosInstance.post("/wishlist/", { product: _id });
-//   if (response.status === 200) {
-//     return response.data;
-//   }
-// };
+export const userData = async (_id) => {
+  const response = await likeAxiosInstance.get("/user/me");
+    return response;
+};
 // export const removeLikedPoduct = async (id) => {
 //   const response = await likeAxiosInstance.delete(`/wishlist/${id}/`);
 //   console.log(response.status);

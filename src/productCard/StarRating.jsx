@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 export default function StarRating() {
   const [rating, setRating] = useState(1);
   const classes = useStyles();
-  console.log(rating);
   return (
     <div className={classes.root}>
       <Rating

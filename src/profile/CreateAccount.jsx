@@ -5,6 +5,7 @@ import CheckEmail from "./CheckEmail";
 import CheckOtp from "./CheckOtp";
 import PostUserName from "./PostUserName";
 import { Zoom } from "react-toastify";
+import CustomizedSnackbars from "./snackbar";
 
 export default function CreateAccount() {
   const [userToken, setUserToken] = useState();
@@ -12,6 +13,7 @@ export default function CreateAccount() {
   const [otpStatus, setOtpStatus] = useState(false);
   const [email, setEmail] = useState();
   const [time, setTime] = useState(false);
+  const [dataStatus, setDataStatus] = useState(false);
 
   const dataError = (err) => {
     if (err === "USER_EXISTS") {
@@ -55,7 +57,6 @@ export default function CreateAccount() {
     }
   };
   const signUpError = (err) => {
-    console.log(err);
     if (err === "DATABASE_ERROR") {
       toast.warn("Something went without server please try again !", {
         position: "bottom-right",
@@ -82,9 +83,7 @@ export default function CreateAccount() {
 
   return (
     <>
-      <ToastContainer 
-      transition={Zoom}
-      bodyClassName="toastBody" />
+      <ToastContainer transition={Zoom} bodyClassName="toastBody" />
       <div className="profile_page sign_up_page">
         <CheckEmail
           setEmail={setEmail}
@@ -111,6 +110,8 @@ export default function CreateAccount() {
           otpStatus={otpStatus}
           userToken={userToken}
           signUpError={signUpError}
+          dataStatus={dataStatus}
+          setDataStatus={setDataStatus}
         />
       </div>
     </>

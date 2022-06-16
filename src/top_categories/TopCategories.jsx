@@ -8,7 +8,6 @@ import { useParams } from "react-router";
 import CategoryProducts from "./CategoryProducts";
 
 export default function TopCategories({
-  categoryIteam,
   filterLoading,
   minAndMax,
   categories,
@@ -81,7 +80,7 @@ export default function TopCategories({
             />
           </div>
         ) : (
-          <CategoryProducts categoryIteam={categoryIteam} slug={slug} />
+          <CategoryProducts  />
         )}
       </div>
     </>

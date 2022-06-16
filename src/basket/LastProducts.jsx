@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../homePage/Home.css";
 import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
@@ -6,11 +6,17 @@ import { photoUrl } from "../helpers/photo_url_fixer";
 import stock from "../LoftMebelPhoto/stock.svg";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useContext } from "react";
+import { getLatestProducts } from "../api/UrlApi";
 import { StorageContext, WishlistContext } from "../context/Context";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../homePage/products/Loader";
+import {LastProductsContext} from "../Basket"
 
 export default function LastProducts({ lastProducts }) {
   const { cartStorage, setCartStorage } = useContext(StorageContext);
   const { likedProduct, setLikedProduct } = useContext(WishlistContext);
+  const {setLastProducts,noMore,setNoMore}=useContext(LastProductsContext)
+  const [page,setPage]=useState(2)
   const addLocalStorage = (
     size,
     photo,
@@ -59,10 +65,31 @@ export default function LastProducts({ lastProducts }) {
       setLikedProduct([...likedProduct, item]);
     }
   };
+  const getData = async () => {
+    getLatestProducts(page).then((response) => {
+      setLastProducts([...lastProducts, ...response.data.results]);
+      if (
+        response.data.results.length === 0 ||
+        response.data.results.length < 12
+      ) {
+        setNoMore(false);
+      }
+      setPage(page + 1);
+    });
+  };
+  
   return (
     <div className="best-sellers">
       <h5>May like you</h5>
       <section className="products">
+      <InfiniteScroll
+        dataLength={lastProducts.length}
+        hasMore={noMore}
+        loader={<Loader/>}
+        next={getData}
+        style={{height:"auto",overflow:"hidden"}}
+        className="infinity_scroll_filter" 
+      >
         {lastProducts.map((item) => {
           const {
             id,
@@ -167,6 +194,7 @@ export default function LastProducts({ lastProducts }) {
             </div>
           );
         })}
+        </InfiniteScroll>
       </section>
     </div>
   );

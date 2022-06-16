@@ -17,17 +17,26 @@ import "../homePage/Home.css";
 import { useContext } from "react";
 import { Redirect } from "react-router";
 import WishlistProducts from "../wishlist/WishlistProducts";
+import CustomizedSnackbars from "./snackbar";
+import { useState } from "react";
 
 export default function SignIn() {
   const { categories, loading } = useContext(CategoriesContext);
   const [menuBar, setMenuBar] = useContext(MenuContext);
   const { setWishlist } = useContext(WishlistContext);
-  const { setSearch, setChangeSearch, search } =
+  const [open,setOpen]=useState(false)
+  const { setSearch, setChangeSearch, 
+     search } =
     useContext(ChangeSearchContext);
   const handleCloseMenu = () => {
     setMenuBar(false);
     setWishlist(false);
   };
+  useEffect(()=>{
+    const status=localStorage.getItem("SignUpStatus")
+    setOpen(status)
+    localStorage.removeItem("SignUpStatus")
+  },[])
   useEffect(() => {
     setSearch([]);
   }, []);
@@ -70,6 +79,7 @@ export default function SignIn() {
       />
       <Categories categories={categories} />
       <LogIn />
+      <CustomizedSnackbars open={open} setOpen={setOpen}/>
     </div>
   );
 }

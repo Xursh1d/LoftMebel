@@ -12,11 +12,16 @@ import {
   WishlistContext,
 } from "../../context/Context";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { getTopPagnationProducts } from "../../api/UrlApi";
+import Loader from "./Loader";
 
 export default function BestSellers() {
-  const { topProduct, categoryId } = useContext(TopProductContext);
+  const { noMore, setNoMore, setTopProduct, topProduct, categoryId } =
+    useContext(TopProductContext);
   const { cartStorage, setCartStorage } = useContext(StorageContext);
   const { likedProduct, setLikedProduct } = useContext(WishlistContext);
+  const [page, setPage] = useState(2);
+
   const addLocalStorage = (
     size,
     photo,
@@ -65,10 +70,29 @@ export default function BestSellers() {
       setLikedProduct([...likedProduct, item]);
     }
   };
+  const getData = async () => {
+    getTopPagnationProducts(page).then((response) => {
+      setTopProduct([...topProduct, ...response.data.results]);
+      if (
+        response.data.results.length === 0 ||
+        response.data.results.length < 12
+      ) {
+        setNoMore(false);
+      }
+      setPage(page + 1);
+    });
+  };
   return (
     <div className="best-sellers">
       {categoryId ? <h5>{categoryId}</h5> : <h5>Best-Sellers</h5>}
-      <InfiniteScroll dataLength={topProduct.length} hasMore={true}>
+      <InfiniteScroll
+        dataLength={topProduct.length}
+        hasMore={noMore}
+        loader={<Loader/>}
+        next={getData}
+        style={{height:"auto",overflow:"hidden"}}
+        className="infinity_scroll" 
+      >
         <section className="products">
           {topProduct.map((item) => {
             const {

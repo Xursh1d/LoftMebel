@@ -90,7 +90,7 @@ export default function ProductCard() {
         childPhoto={childPhoto}
       />
       {topProduct.length ? (
-        <BestSellers topProduct={topProduct} categoryId={categoryId} />
+        <BestSellers />
       ) : (
         <img src={emptyIcon} className="empty_text"/>
       )}

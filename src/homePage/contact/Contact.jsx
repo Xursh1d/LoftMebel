@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useReducer, useRef, useState } from "react";
 import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import phone from "../../LoftMebelPhoto/phone.svg";
 import inst from "../../LoftMebelPhoto/inst.svg";
 import mail from "../../LoftMebelPhoto/mail.svg";
 import YandexMap from "./YandexMap";
+import ReactLoading from "react-loading";
+import { feedback } from "../../api/UrlApi";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import CustomizedSnackbars from "./SnackBar";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -35,9 +41,7 @@ const useStyles = makeStyles((theme) => ({
       border: `1px solid ${theme.palette.secondary.main}`,
     },
   },
-  inputSpace: {
-    // border: "1px solid red",
-  },
+  inputSpace: {},
   Input: {
     margin: theme.spacing(0),
     width: "48%",
@@ -95,6 +99,41 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     marginTop: "20px",
+  },
+  required: {
+    position: "absolute",
+    right: "130px",
+    minWidth: "200px",
+    height: "100%",
+    display: "flex",
+    textTransform: "none",
+    alignItems: "center",
+    justifyContent: "end",
+    color: theme.palette.error.main,
+    fontSize: "12px",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "135px",
+      maxWidth: "300px",
+      fontSize: "10px",
+    },
+  },
+  file_name: {
+    position: "absolute",
+    right: "130px",
+    minWidth: "200px",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    textTransform: "none",
+    justifyContent: "end",
+    color: theme.palette.primary.main,
+    opacity: "0.8",
+    fontSize: "12px",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "135px",
+      maxWidth: "300px",
+      fontSize: "10px",
+    },
   },
   contactWith: {
     width: "80%",
@@ -166,6 +205,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "40px",
     },
   },
+  uploadFile: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    opacity: "0",
+    cursor: "pointer",
+  },
   contactItem: {
     [theme.breakpoints.down("sm")]: {
       margin: "20px 0",
@@ -179,21 +225,115 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+export const reducer = (state, action) => {
+  switch (action.type) {
+    case "start_loading":
+      return { loading: true };
+    case "finish_loading":
+      return { loading: false };
+  }
+};
+
 export default function Contact() {
   const classes = useStyles();
+  const inputElement1 = useRef();
+  const inputElement2 = useRef();
+  const inputElement3 = useRef();
+  const inputElement4 = useRef();
+
+  const initialValue = {
+    loading: false,
+  };
+  const [state, dispatch] = useReducer(reducer, initialValue);
+  const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
+
+  const { loading } = state;
+
+  const formik = useFormik({
+    initialValues: {
+      fullname: "",
+      email: "",
+      message: "",
+      file: {},
+    },
+
+    onSubmit: (values) => {
+      dispatch({ type: "start_loading" });
+      const data = new FormData();
+
+      data.append("fullname", values.fullname);
+      data.append("email", values.email);
+      data.append("message", values.message);
+      data.append("file", values.file);
+      feedback(data)
+        .then((response) => {
+          if (response.status == 201) {
+            setOpen(true);
+            values.fullname = "";
+            values.email = "";
+            values.message = "";
+            values.file = "";
+          }
+          dispatch({ type: "finish_loading" });
+        })
+        .catch((error) => {
+          if (error.response) {
+            setOpenError(true);
+            dispatch({ type: "finish_loading" });
+          }
+        });
+    },
+    validationSchema: Yup.object({
+      fullname: Yup.string()
+        .required("Enter Full Name")
+        .max(255, "Must be less then 255 characters "),
+      email: Yup.string()
+        .email("Invalid email")
+        .max(125, "Must be less then 125 charcters")
+        .required("Enter email"),
+      message: Yup.string().required("Enter message"),
+      file: Yup.mixed()
+        .required("You need to provide a file !")
+        .test("fileSize", "File is too large !", (value) => {
+          return value && value.size <= 5024000;
+        }),
+    }),
+  });
+
   return (
     <>
+      <CustomizedSnackbars
+        open={open}
+        setOpen={setOpen}
+        openError={openError}
+        setOpenError={setOpenError}
+      />
       <Grid container spacing={3} className={classes.container}>
         <Grid item xs={12} lg={6} md={6} className={classes.inputSpace}>
           <Typography className={classes.title}>Contact us</Typography>
-          <form className={classes.root} noValidate autoComplete="off">
+          <form
+            className={classes.root}
+            onSubmit={formik.handleSubmit}
+            autoComplete="off"
+          >
             <div className={classes.row1} style={{ marginBottom: "30px" }}>
               <TextField
+                disabled={loading}
+                inputRef={inputElement1}
                 className={classes.Input}
                 id="outlined-basic"
-                label="Your name"
+                label="Your fullname"
                 variant="outlined"
                 size="small"
+                name="fullname"
+                value={formik.values.fullname}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.fullname && Boolean(formik.errors.fullname)
+                }
+                helperText={formik.touched.fullname && formik.errors.fullname}
                 InputLabelProps={{
                   style: {
                     lineHeight: 0.5,
@@ -203,11 +343,18 @@ export default function Contact() {
                 }}
               />
               <TextField
+                inputRef={inputElement2}
+                disabled={loading}
                 className={classes.Input}
                 id="outlined-basic"
                 label="Your email"
                 variant="outlined"
                 size="small"
+                name="email"
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                value={formik.values.email}
                 InputLabelProps={{
                   style: {
                     lineHeight: 0.5,
@@ -219,12 +366,19 @@ export default function Contact() {
             </div>
             <div className={classes.row2}>
               <TextField
+                disabled={loading}
+                inputRef={inputElement3}
                 className={classes.massage}
                 id="outlined-multiline-static"
                 label="Massage"
                 multiline
                 rows={6}
                 variant="outlined"
+                name="message"
+                onChange={formik.handleChange}
+                error={formik.touched.message && Boolean(formik.errors.message)}
+                helperText={formik.touched.message && formik.errors.message}
+                value={formik.values.message}
                 InputLabelProps={{
                   style: {
                     lineHeight: 0.5,
@@ -236,15 +390,53 @@ export default function Contact() {
             </div>
             <div className={classes.btns}>
               <Button
-                type="file"
                 variant="contained"
-                style={{ marginRight: "20px" }}
+                style={{ position: "relative", marginRight: "20px" }}
               >
                 Attach file
+                <input
+                  inputRef={inputElement4}
+                  className={classes.uploadFile}
+                  type="file"
+                  name="file"
+                  disabled={loading}
+                  onChange={(e) => {
+                    formik.setFieldValue("file", e.target.files[0]);
+                  }}
+                />
+                {formik.errors.file && formik.touched.file ? (
+                  <p className={classes.required}>{formik.errors.file}</p>
+                ) : (
+                  <p className={classes.file_name}>
+                    {formik.values.file ? formik.values.file.name : null}
+                  </p>
+                )}
               </Button>
-              <Button type="submit" variant="contained" color="primary">
-                Send
-              </Button>
+              {loading ? (
+                <Button
+                  style={{ width: "100px" }}
+                  variant="contained"
+                  color="primary"
+                >
+                  <ReactLoading
+                    className={classes.loader_spin_auth}
+                    type={"spin"}
+                    color={"#ffffff"}
+                    height={"100%"}
+                    width={"20px"}
+                  />
+                </Button>
+              ) : (
+                <Button
+                  disabled={!formik.isValid}
+                  style={{ width: "100px" }}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  Send
+                </Button>
+              )}
             </div>
           </form>
         </Grid>

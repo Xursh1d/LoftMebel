@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Home from "./Home";
 import Basket from "./Basket";
 import ProductCard from "./ProductCard";
@@ -7,7 +7,7 @@ import Term from "./Term";
 import Contact from "./Contact";
 import ScrollTop from "./scroll_top/ScrollTop";
 import CategoryItems from "./СategoryItems";
-import About from "./About"
+import About from "./About";
 import "typeface-kanit";
 import {
   ActiveSlideContext,
@@ -29,7 +29,7 @@ import {
 import SignUp from "./profile/SignUp";
 import SignIn from "./profile/SignIn";
 import MyOrders from "./my_orders/MyOrders";
-import Profile from "./Profile"
+import Profile from "./Profile";
 import { isJwtExpired } from "jwt-check-expiration";
 
 function App() {
@@ -40,6 +40,7 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
   const [topProduct, setTopProduct] = useState([]);
+  const [noMore, setNoMore] = useState(true);
   const [categoryId, setCatgeoryId] = useState();
   const [loading, setLoading] = useState(true);
   const [cartStorage, setCartStorage] = useLocalStrage("product", []);
@@ -47,10 +48,9 @@ function App() {
   const [changeSearch, setChangeSearch] = useState([]);
   const [search, setSearch] = useState();
   const [refreshToken, setRefreshToken] = useState(true);
-
   let getToken = localStorage.getItem("refresh");
   useEffect(() => {
-    if(getToken && getToken !== null) {
+    if (getToken && getToken !== null) {
       setRefreshToken(isJwtExpired(localStorage.getItem("refresh")));
     } else {
       setRefreshToken(true);
@@ -102,7 +102,11 @@ function App() {
 
   useEffect(() => {
     getTopProducts().then((products) => {
-      setTopProduct(products.data);
+      setTopProduct(products.data.results);
+      console.log(products.data.results);
+      if (products.data.results.length < 12) {
+        setNoMore(false);
+      }
     });
   }, []);
 
@@ -145,7 +149,13 @@ function App() {
                     value={[activeSlide, setActiveSlide]}
                   >
                     <TopProductContext.Provider
-                      value={{ topProduct, categoryId }}
+                      value={{
+                        noMore,
+                        setNoMore,
+                        topProduct,
+                        setTopProduct,
+                        categoryId,
+                      }}
                     >
                       <ChangeSearchContext.Provider
                         value={{
@@ -158,10 +168,10 @@ function App() {
                           value={[refreshToken, setRefreshToken]}
                         >
                           <Switch>
-                            <Route path="/" exact component={Home}/>
+                            <Route path="/" exact component={Home} />
                             <Route path="/contact" component={Contact} />
-                            <Route path="/about" component={About}/>
-                            <Route path="/profile" component={Profile}/>
+                            <Route path="/about" component={About} />
+                            <Route path="/profile" component={Profile} />
                             <Route
                               path="/product_card/:slug"
                               component={ProductCard}
@@ -174,7 +184,7 @@ function App() {
                             <Route path="/search/:slug" component={Term} />
                             <Route path="/user/sign_in" component={SignIn} />
                             <Route path="/user/sign_up" component={SignUp} />
-                            <Route path="/my_orders" component={MyOrders}/>                            
+                            <Route path="/my_orders" component={MyOrders} />
                           </Switch>
                         </TokensContext.Provider>
                       </ChangeSearchContext.Provider>

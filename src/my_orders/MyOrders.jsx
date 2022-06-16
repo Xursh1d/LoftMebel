@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
 import { getRegions } from "../api/UrlApi";
 import "./Order.css";
@@ -11,6 +11,7 @@ import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg";
 import ProductList from "./ProductList";
 import HorizontalLinearStepper from "./Stepper";
 import { Redirect } from "react-router";
+import { reducer } from "./reducer";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -149,27 +150,27 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "17px",
     },
   },
-  emptyImg:{
-    width:"100%"
-  }
+  emptyImg: {
+    width: "100%",
+  },
 }));
-
 export default function MyOrders() {
   const classes = useStyles();
   const [refreshToken] = useContext(TokensContext);
   const { loading, setLoading } = useContext(CategoriesContext);
+  const { cartStorage, removeLocalStorage } = useContext(StorageContext);
   const [regions, setRegions] = useState([]);
   const [changeRegions, setChangeRegions] = useState();
   const [district, setDistrict] = useState([]);
   const [allSum, setAllSum] = useState("");
-  const { cartStorage, removeLocalStorage } = useContext(StorageContext);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set());
+  console.log(regions);
   useEffect(() => {
     setLoading(true);
     getRegions().then((response) => {
-      setChangeRegions(response.data);
       setRegions(Object.keys(response.data));
+      setChangeRegions(response.data);
       setLoading(false);
     });
   }, []);
@@ -228,16 +229,16 @@ export default function MyOrders() {
           <HorizontalLinearStepper
             isStepSkipped={isStepSkipped}
             activeStep={activeStep}
-            setActiveStep={setActiveStep}
             skipped={skipped}
+            setActiveStep={setActiveStep}
             setSkipped={setSkipped}
             className={classes.positionStep}
           />
         </div>
         <Grid container spacing={3} style={{ marginTop: "20px" }}>
           <Grid className={classes.formaddress} item xs={12} md={12} lg={7}>
-            <FormAddress
               cartStorage={cartStorage}
+            <FormAddress
               regions={regions}
               district={district}
               handleChangeRegions={handleChangeRegions}

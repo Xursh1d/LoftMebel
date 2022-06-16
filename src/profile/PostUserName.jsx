@@ -3,18 +3,23 @@ import { FiUpload } from "react-icons/fi";
 import ReactLoading from "react-loading";
 import { createAccount } from "../api/UrlApi";
 import { FaCheck } from "react-icons/fa";
-import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useFormik } from "formik";
 import { useHistory } from "react-router";
 import Fade from "react-reveal/Fade";
 import Select from "react-select";
 
-export default function PostUserName({ otpStatus, signUpError, userToken }) {
+export default function PostUserName({
+  otpStatus,
+  signUpError,
+  userToken,
+  dataStatus,
+  setDataStatus,
+}) {
   const [signUpLoader, setSignUpLoader] = useState();
   const [selectedOption, setSelectedOption] = useState("");
   const [checkPassword, setCheckPassword] = useState(false);
-  const [dataStatus, setDataStatus] = useState(false);
-  const [photo,setPhoto] = useState();
+
   const history = useHistory();
   const options = [
     { value: "male", label: "Male" },
@@ -23,35 +28,33 @@ export default function PostUserName({ otpStatus, signUpError, userToken }) {
   if (dataStatus) {
     history.push("/user/sign_in");
   }
-  const handleChangeImage = (e) => {
-    setPhoto(e.target.files[0]);
-  };
 
   const formik = useFormik({
     initialValues: {
       fullName: "",
       password: "",
       phone: "",
+      photo: {},
     },
     onSubmit: (values) => {
-      // const data = new FormData();
-      // data.append(photo.name, photo,photo.name);
-      // console.log(data);
+      const data = new FormData();
+
+      data.append("token", userToken);
+      data.append("fullname", values.fullName);
+      data.append("phone", values.phone);
+      data.append("password", `${values.password}`);
+      data.append("gender", selectedOption.value);
+      data.append("photo", values.photo);
+
       setSignUpLoader(true);
-      createAccount(
-        userToken,
-        values.fullName,
-        values.phone,
-        values.password,
-        selectedOption.value
-        // data
-      ).then((response) => {
-        console.log(response.data);
+      createAccount(data).then((response) => {
+        console.log(response);
+        localStorage.setItem("SignUpStatus",JSON.stringify(response.data.status))
         setDataStatus(response.data.status);
         signUpError(response.data.detail);
         setSignUpLoader(false);
       });
-    },
+    },  
     validationSchema: Yup.object({
       fullName: Yup.string()
         .required("Enter Full Name")
@@ -62,6 +65,14 @@ export default function PostUserName({ otpStatus, signUpError, userToken }) {
       phone: Yup.string()
         .required("Enter phone number")
         .max(20, "Must be less then 20 characters"),
+      photo: Yup.mixed()
+        .required("You need to provide a photo !")
+        .test("fileSize", "File is too large !", (value) => {
+          return value && value.size <= 5024000;
+        })
+        .test("fileFormat", "Only upload jpg or jpeg !", (value) => {
+          return value && ["image/png", "image/jpg", "image/jpeg"].includes(value.type);
+        }),
     }),
   });
 
@@ -95,9 +106,20 @@ export default function PostUserName({ otpStatus, signUpError, userToken }) {
             <FiUpload className="upload_icon" />
             <input
               type="file"
+              name="photo"
+              disabled={signUpLoader}
               className="image_input"
-              onChange={handleChangeImage}
+              onChange={(e) => {
+                formik.setFieldValue("photo", e.target.files[0]);
+              }}
             />
+            {formik.errors.photo && formik.touched.photo ? (
+              <p className="required">{formik.errors.photo}</p>
+            ) : (
+              <p className="upload_file_name">
+                {formik.values.photo ? formik.values.photo.name : null}
+              </p>
+            )}
           </div>
         </div>
         <div className="input_container">
@@ -172,7 +194,8 @@ export default function PostUserName({ otpStatus, signUpError, userToken }) {
             className={
               formik.values.fullName.length &&
               formik.values.password.length >= 8 &&
-              formik.values.phone
+              formik.values.phone &&
+              !formik.errors.photo
                 ? "code_next_btn"
                 : "code_next_btn disabled_btn"
             }

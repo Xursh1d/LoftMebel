@@ -6,6 +6,7 @@ import {
   MenuContext,
   ChangeSearchContext,
   WishlistContext,
+  ProductContext,
 } from "./context/Context";
 import Footer from "./homePage/Footer";
 import Input from "./homePage/Input";
@@ -46,53 +47,63 @@ export default function СategoryItems() {
   const [loaderInputRange, setLoaderInputRange] = useState(true);
   const [colorsLoader, setLoaderColors] = useState(true);
   const [sizesLoader, setLoaderSizes] = useState(true);
+  const [noMore, setNoMore] = useState(true);
   const handleCloseMenu = () => {
     setMenuBar(false);
     setWishlist(false);
     setActiveProfile(false);
   };
   useEffect(() => {
-    setLoading(true);
-    if (slug === "discount") {
-      getTopDiscountItem().then((discountProduct) => {
-        setCatgeoryIteam(discountProduct.data.results);
-        setLoading(false);
-      });
-    }
-    getMinAndMaxCategoryPrice(slug).then((getPrice) => {
-      setMinAndMax(getPrice.data);
-      setPrice(getPrice.data);
-      setLoaderInputRange(false);
-    });
-    getFilterCategorySize(slug).then((getSize) => {
-      setSizes(getSize.data);
-      setLoaderSizes(false);
-    });
-    getCategoryColors(slug).then((getColors) => {
-      setColors(getColors.data);
-      setLoaderColors(false);
-    });
-    setFilterColor([]);
-    setFilterSize([]);
-    setSearch([]);
-  }, [slug]);
-  useEffect(() => {
-    if (slug !== "discount") {
+    setNoMore(true);
+    if (slug !== "discount" && price.max !== 0) {
       setFilterLoading(true);
       getTopCategoryItem(
         slug,
         price.min,
         price.max,
         filterColor,
-        filterSize
+        filterSize,
+        1
       ).then((category) => {
-        setCatgeoryIteam(category.data);
-        setFilterLoading(false);
+        setCatgeoryIteam(category.data.results);
         setLoading(false);
+        setFilterLoading(false);
+        if (category.data.results.length < 12) {
+          setNoMore(false);
+        }
       });
     }
-  }, [price, filterColor, filterSize]);
-
+  }, [price, filterColor, filterSize]); 
+  useEffect(() => {
+    setLoading(true);
+    if (slug === "discount") {
+      getTopDiscountItem().then((discountProduct) => {
+        setCatgeoryIteam(discountProduct.data.results);
+        setLoading(false);
+        setFilterLoading(false);
+        if (discountProduct.data.results.length < 12) {
+          setNoMore(false);
+        }
+      });
+    } else {
+      getMinAndMaxCategoryPrice(slug).then((getPrice) => {
+        setMinAndMax(getPrice.data);
+        setPrice(getPrice.data);
+        setLoaderInputRange(false);
+      });
+      getFilterCategorySize(slug).then((getSize) => {
+        setSizes(getSize.data);
+        setLoaderSizes(false);
+      });
+      getCategoryColors(slug).then((getColors) => {
+        setColors(getColors.data);
+        setLoaderColors(false);
+      });
+      setFilterColor([]);
+      setFilterSize([]);
+      setSearch([]);
+    }
+  }, [slug]);
   return loading ? (
     <div className="loader">
       <h6>Loading</h6>
@@ -108,41 +119,54 @@ export default function СategoryItems() {
     <div onClick={() => handleCloseMenu()}>
       <ColorFilter.Provider value={{ filterColor, setFilterColor }}>
         <SizeFilter.Provider value={{ filterSize, setFilterSize }}>
-          <FilterLoaders.Provider
-            value={{ loaderInputRange, colorsLoader, sizesLoader }}
+          <ProductContext.Provider
+            value={{
+              slug,
+              price,
+              filterColor,
+              filterSize,
+              noMore,
+              setNoMore,
+              categoryIteam,
+              setCatgeoryIteam,
+            }}
           >
-            <MenuBar
-              categories={categories}
-              menuBar={menuBar}
-              setMenuBar={setMenuBar}
-            />
-            <Menu />
-            <WishlistProducts />
-            <LogoSearch
-              setMenuBar={setMenuBar}
-              search={search}
-              setChangeSearch={setChangeSearch}
-            />
-            <Input
-              setChangeSearch={setChangeSearch}
-              search={search}
-              style={"mobile-input"}
-              type={"text"}
-              palceholder={"Search"}
-            />
-            <Categories categories={categories} />
-            <TopCategories
-              filterLoading={filterLoading}
-              colors={colors}
-              price={price}
-              sizes={sizes}
-              setPrice={setPrice}
-              categoryIteam={categoryIteam}
-              categories={categories}
-              minAndMax={minAndMax}
-            />
-            <Footer categories={categories} />
-          </FilterLoaders.Provider>
+            <FilterLoaders.Provider
+              value={{ loaderInputRange, colorsLoader, sizesLoader }}
+            >
+              <MenuBar
+                categories={categories}
+                menuBar={menuBar}
+                setMenuBar={setMenuBar}
+              />
+              <Menu />
+              <WishlistProducts />
+              <LogoSearch
+                setMenuBar={setMenuBar}
+                search={search}
+                setChangeSearch={setChangeSearch}
+              />
+              <Input
+                setChangeSearch={setChangeSearch}
+                search={search}
+                style={"mobile-input"}
+                type={"text"}
+                palceholder={"Search"}
+              />
+              <Categories categories={categories} />
+              <TopCategories
+                filterLoading={filterLoading}
+                colors={colors}
+                price={price}
+                sizes={sizes}
+                setPrice={setPrice}
+                categoryIteam={categoryIteam}
+                categories={categories}
+                minAndMax={minAndMax}
+              />
+              <Footer categories={categories} />
+            </FilterLoaders.Provider>
+          </ProductContext.Provider>
         </SizeFilter.Provider>
       </ColorFilter.Provider>
     </div>

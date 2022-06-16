@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import stock from "../LoftMebelPhoto/stock.svg";
 import { photoUrl } from "../helpers/photo_url_fixer";
 import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import { useContext } from "react";
-import "../homePage/Home.css"
-import { StorageContext, WishlistContext } from "../context/Context";
-import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg"
-export default function CategoryProducts({ categoryIteam, slug }) {
+import "../homePage/Home.css";
+import {
+  ProductContext,
+  StorageContext,
+  WishlistContext,
+} from "../context/Context";
+import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg";
+import Loader from "../homePage/products/Loader";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {getTopCategoryItem } from "../api/UrlApi";
+
+export default function CategoryProducts() {
   const { likedProduct, setLikedProduct } = useContext(WishlistContext);
   const { cartStorage, setCartStorage } = useContext(StorageContext);
+  const {
+    noMore,
+    setNoMore,
+    slug,
+    price,
+    filterColor,
+    filterSize,
+    categoryIteam,
+    setCatgeoryIteam,
+  } = useContext(ProductContext);
+  const [page, setPage] = useState(2);
   const addLocalStorage = (
     size,
     photo,
@@ -59,121 +78,152 @@ export default function CategoryProducts({ categoryIteam, slug }) {
       setLikedProduct([...likedProduct, item]);
     }
   };
+  const getData = async () => {
+    getTopCategoryItem(
+      slug,
+      price.min,
+      price.max,
+      filterColor,
+      filterSize,
+      page
+    ).then((category) => {
+      setCatgeoryIteam([...categoryIteam, ...category.data.results]);
+      if (
+        category.data.results.length === 0 ||
+        category.data.results.length < 12
+      ) {
+        setNoMore(false);
+      }
+      setPage(page + 1);
+    });
+  };
   return (
     <>
       {categoryIteam.length ? (
         <section
           className={slug === "discount" ? "products" : "products filter_table"}
         >
-          {categoryIteam.map((item) => {
-            const {
-              id,
-              title,
-              category,
-              photo,
-              price,
-              size,
-              color,
-              discount,
-              discounted_price,
-            } = item;
-            const findID = likedProduct.find((i) => i.id == id);
-            const sizeProduct = size.slice(0, 1);
-            return (
-              <div key={id} className="product-hover filter_category_product">
-                <Fade>
-                  <div className="product">
-                    <span
-                      className={
-                        discount
-                          ? "stock-price active-stock-price"
-                          : "stock-price"
-                      }
-                    >
-                      <img src={stock} alt="" />
-                      <p>{discount}%</p>
-                    </span>
-                    <span
-                      onClick={() => handelWishlistStorage(item)}
-                      className="product-heart-icon"
-                    >
-                      <IoHeartOutline className="like_outline" />
-                      <IoHeart
-                        className={
-                          findID ? "like_icon open_heart" : "like_icon"
-                        }
-                      />
-                    </span>
-                    <span className="product-stock-icon">
-                      <img src={stock} alt="" />
-                    </span>
-                    <Link to={`/product_card/${id}`} className="product-photo">
-                      <img src={photoUrl(photo)} alt="" />
-                    </Link>
-                    <h6>{title}</h6>
-                    <p>{category.title}</p>
-                    <h6 className="price">
-                      {price}$
-                      <p
+          <InfiniteScroll
+            dataLength={categoryIteam.length}
+            hasMore={noMore}
+            loader={<Loader />}
+            next={getData}
+            style={{ height: "auto", overflow: "hidden" }}
+            className="infinity_scroll_filter"
+          >
+            {categoryIteam.map((item) => {
+              const {
+                id,
+                title,
+                category,
+                photo,
+                price,
+                size,
+                color,
+                discount,
+                discounted_price,
+              } = item;
+              const findID = likedProduct.find((i) => i.id == id);
+              const sizeProduct = size.slice(0, 1);
+              return (
+                <div key={id} className="product-hover filter_category_product">
+                  <Fade>
+                    <div className="product">
+                      <span
                         className={
                           discount
-                            ? "active-discounted-price  discounted-price"
-                            : " discounted-price"
+                            ? "stock-price active-stock-price"
+                            : "stock-price"
                         }
                       >
-                        {discounted_price}$
-                      </p>
-                    </h6>
-                    <div className="product-size">
-                      <h6>Size</h6>
-                      {sizeProduct.map((s) => (
-                        <div key={s.id} className="size-item">
-                          <div>
-                            width:
-                            <br />
-                            <span>{s.width} sm</span>
+                        <img src={stock} alt="" />
+                        <p>{discount}%</p>
+                      </span>
+                      <span
+                        onClick={() => handelWishlistStorage(item)}
+                        className="product-heart-icon"
+                      >
+                        <IoHeartOutline className="like_outline" />
+                        <IoHeart
+                          className={
+                            findID ? "like_icon open_heart" : "like_icon"
+                          }
+                        />
+                      </span>
+                      <span className="product-stock-icon">
+                        <img src={stock} alt="" />
+                      </span>
+                      <Link
+                        to={`/product_card/${id}`}
+                        className="product-photo"
+                      >
+                        <img src={photoUrl(photo)} alt="" />
+                      </Link>
+                      <h6>{title}</h6>
+                      <p>{category.title}</p>
+                      <h6 className="price">
+                        {price}$
+                        <p
+                          className={
+                            discount
+                              ? "active-discounted-price  discounted-price"
+                              : " discounted-price"
+                          }
+                        >
+                          {discounted_price}$
+                        </p>
+                      </h6>
+                      <div className="product-size">
+                        <h6>Size</h6>
+                        {sizeProduct.map((s) => (
+                          <div key={s.id} className="size-item">
+                            <div>
+                              width:
+                              <br />
+                              <span>{s.width} sm</span>
+                            </div>
+                            <span className="x-size">×</span>
+                            <div>
+                              height:
+                              <br />
+                              <span>{s.height} sm</span>
+                            </div>
+                            <span className="x-size">×</span>
+                            <div>
+                              length:
+                              <br />
+                              <span>{s.length} sm</span>
+                            </div>
                           </div>
-                          <span className="x-size">×</span>
-                          <div>
-                            height:
-                            <br />
-                            <span>{s.height} sm</span>
-                          </div>
-                          <span className="x-size">×</span>
-                          <div>
-                            length:
-                            <br />
-                            <span>{s.length} sm</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
 
-                    <button
-                      onClick={() =>
-                        addLocalStorage(
-                          size[0],
-                          photo,
-                          title,
-                          color[0],
-                          id,
-                          price,
-                          discount,
-                          discounted_price
-                        )
-                      }
-                      className="add-to-cart"
-                    >
-                      <p>Add to cart</p>
-                    </button>
-                  </div>
-                </Fade>
-              </div>
-            );
-          })}
+                      <button
+                        onClick={() =>
+                          addLocalStorage(
+                            size[0],
+                            photo,
+                            title,
+                            color[0],
+                            id,
+                            price,
+                            discount,
+                            discounted_price
+                          )
+                        }
+                        className="add-to-cart"
+                      >
+                        <p>Add to cart</p>
+                      </button>
+                    </div>
+                  </Fade>
+                </div>
+              );
+            })}
+          </InfiniteScroll>
         </section>
       ) : (
-        <img src={emptyIcon} className="empty_icon"/>
+        <img src={emptyIcon} className="empty_icon" />
       )}
     </>
   );
