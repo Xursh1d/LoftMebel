@@ -5,7 +5,7 @@ export default function MenuColumn2({ phone, delivery }) {
     <div className="menuColumn2">
       <a href="tel:+998911705909">
         <img src={phone} style={{ width: 17 }} />
-        +99891 170 59 09
+        +99894 133 77 66
       </a>
       <Link to="/">
         <img src={delivery} alt="" />

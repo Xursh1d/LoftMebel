@@ -3,7 +3,6 @@ import { isJwtExpired } from "jwt-check-expiration";
 
 const baseURL = "https://www.uktamjon.uz/api";
 const getAccess = JSON.parse(localStorage.getItem("access"));
-console.log(getAccess);
 export const likeAxiosInstance = axios.create({
   baseURL,
   headers: {
@@ -18,10 +17,14 @@ likeAxiosInstance.interceptors.request.use(async (req) => {
     window.location.href = "/user/sign_in";
   }
   if (!isJwtExpired(getAccess)) return req;
-  const response = await axios.post(`${baseURL}/refresh/`, {
-    refresh: refreshToken,
-  });
-  localStorage.setItem("access", JSON.stringify(response.data.data.access));
-  req.headers.Authorization = `Bearer ${response.data.data.access}`;
-  return req;
+  //   localStorage.removeItem("refresh")
+  //   localStorage.removeItem("access")
+  //   window.location.href = "/user/sign_in";
+
+  // // const response = await axios.post(`${baseURL}/refresh/`, {
+  // //   refresh: refreshToken,
+  // // });
+  // // localStorage.setItem("access", JSON.stringify(response.data.data.access));
+  // // req.headers.Authorization = `Bearer ${response.data.data.access}`;
+  // // return req;
 });

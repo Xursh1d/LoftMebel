@@ -165,13 +165,14 @@ export default function MyOrders() {
   const [allSum, setAllSum] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
-  console.log(regions);
+  console.log(cartStorage);
   useEffect(() => {
     setLoading(true);
     getRegions().then((response) => {
       setRegions(Object.keys(response.data));
-      setChangeRegions(response.data);
+      setChangeRegions( response.data);
       setLoading(false);
+      // console.log(Object.keys(response.data));
     });
   }, []);
   useEffect(() => {
@@ -237,10 +238,10 @@ export default function MyOrders() {
         </div>
         <Grid container spacing={3} style={{ marginTop: "20px" }}>
           <Grid className={classes.formaddress} item xs={12} md={12} lg={7}>
-              cartStorage={cartStorage}
             <FormAddress
               regions={regions}
               district={district}
+              cartStorage={cartStorage}
               handleChangeRegions={handleChangeRegions}
               handleNext={handleNext}
             />

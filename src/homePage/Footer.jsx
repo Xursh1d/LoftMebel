@@ -55,18 +55,18 @@ export default function Footer({ categories }) {
           </ul>
         </div>
         <div className="footer-contact-item2">
-          <a href="tel:+998911705909">
+          <a href="tel:+998941337766">
             <img src={phone} alt="" />
-            <span>+998 91 170 59 09</span>
+            <span>+998 94 133 77 66</span>
           </a>
-          <a href="https://instagram.com/frontend15">
+          <a href="https://instagram.com/the_xashimir">
             <img src={inst} alt="" />
             <span>INSTAGRAM</span>
           </a>
 
-          <a href="mailto:xurshidforjob@gmail.com">
+          <a href="mailto:xashimir990604@gmail.com">
             <img src={mail} alt="" />
-            <span>xurshidforjob@gmail.com</span>
+            <span>xashimir990604@gmail.com</span>
           </a>
         </div>
       </div>

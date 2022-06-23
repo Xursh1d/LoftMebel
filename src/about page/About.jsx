@@ -5,6 +5,7 @@ import img1 from "../LoftMebelPhoto/profit.png";
 import img2 from "../LoftMebelPhoto/car.png";
 import img3 from "../LoftMebelPhoto/time.png";
 import img4 from "../LoftMebelPhoto/production.png";
+import Section from "./Section";
 
 const useStyles = makeStyles((theme) => ({
   aboutHeader: {
@@ -311,6 +312,7 @@ export default function About() {
           </Grid>
         </Grid>
       </Grid>
+      <Section />
     </div>
   );
 }

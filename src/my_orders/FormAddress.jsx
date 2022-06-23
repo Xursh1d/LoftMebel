@@ -115,6 +115,7 @@ export default function FormAddress({
   cartStorage,
   handleNext,
 }) {
+  console.log(cartStorage);
   const [selectedRegions, setSelectedRegions] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const classes = useStyles();
@@ -218,13 +219,13 @@ export default function FormAddress({
             onChange={(e) => setSelectedDistrict(e.target.value)}
             label="Your district"
           >
-            {district.map((dis) => {
-              return (
-                <MenuItem key={dis} value={dis}>
-                  {dis}
-                </MenuItem>
-              );
-            })}
+              {district.map((dis) => {
+                return (
+                  <MenuItem key={dis} value={dis}>
+                    {dis}
+                  </MenuItem>
+                );
+              })}
           </Select>
         </FormControl>
       </Box>

@@ -14,7 +14,6 @@ import Categories from "./homePage/Categories";
 import Input from "./homePage/Input";
 import { useContext } from "react";
 import WishlistProducts from "./wishlist/WishlistProducts";
-import Contact from "./homePage/contact/Contact";
 import MyProfile from "./my_profile/MyProfile";
 import { userData } from "./api/UrlApi";
 

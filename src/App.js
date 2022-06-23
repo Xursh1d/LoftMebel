@@ -48,6 +48,7 @@ function App() {
   const [changeSearch, setChangeSearch] = useState([]);
   const [search, setSearch] = useState();
   const [refreshToken, setRefreshToken] = useState(true);
+
   let getToken = localStorage.getItem("refresh");
   useEffect(() => {
     if (getToken && getToken !== null) {
@@ -103,8 +104,8 @@ function App() {
   useEffect(() => {
     getTopProducts().then((products) => {
       setTopProduct(products.data.results);
-      console.log(products.data.results);
-      if (products.data.results.length < 12) {
+
+       if (products.data.results.length < 12) {
         setNoMore(false);
       }
     });

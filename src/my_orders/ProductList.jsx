@@ -106,7 +106,7 @@ export default function ProductList({ cartStorage, removeLocalStorage }) {
           selectSize,
         } = item;
         return (
-          <Grid container key={id} spacing={2} className={classes.paper}>
+          <Grid key={id} container spacing={2} className={classes.paper}>
             <Grid xs={4}  className={classes.imgGrid} item>
               <Link to={`/product_card/${productId}`}>
                 <ButtonBase className={classes.image}>

@@ -3,6 +3,10 @@
     width: 1140px;
     margin: auto;
   }
+  .aboutApp{
+    width: 100%;
+    border: 1px solid red;
+  }
 }
 @media (min-width: 1030px) and (max-width: 1249px) {
   .app {
