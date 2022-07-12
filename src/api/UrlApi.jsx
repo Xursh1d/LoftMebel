@@ -93,14 +93,12 @@ export const getRegions = async () => {
   const response = await axiosInstance.get(`/regions`);
   return response;
 };
-export const userData = async (_id) => {
-  const response = await likeAxiosInstance.get("/user/me");
-    return response;
+export const userData = async () => {
+  const getAccess = JSON.parse(localStorage.getItem("access"));
+  const response = await axiosInstance.get("/user/me/", {
+    headers: {
+      Authorization: `Bearer ${getAccess}`,
+    },
+  });
+  return response;
 };
-// export const removeLikedPoduct = async (id) => {
-//   const response = await likeAxiosInstance.delete(`/wishlist/${id}/`);
-//   console.log(response.status);
-//   if (response.status === 204) {
-//     return true;
-//   } else return false;
-// };

@@ -2,7 +2,6 @@ import React from "react";
 import { photoUrl } from "../helpers/photo_url_fixer";
 import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import img from "../LoftMebelPhoto/bg-slider(1).png";
 import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles((theme) => ({
   root: {

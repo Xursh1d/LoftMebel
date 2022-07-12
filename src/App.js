@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  useParams,
+} from "react-router-dom";
 import Home from "./Home";
 import Basket from "./Basket";
 import ProductCard from "./ProductCard";
@@ -18,6 +23,7 @@ import {
   ChangeSearchContext,
   WishlistContext,
   StorageContext,
+  AccessTokenContext,
   TokensContext,
 } from "./context/Context";
 import {
@@ -48,8 +54,11 @@ function App() {
   const [changeSearch, setChangeSearch] = useState([]);
   const [search, setSearch] = useState();
   const [refreshToken, setRefreshToken] = useState(true);
-
+  const [accessToken, setAccessToken] = useState();
+  const { slug } = useParams();
   let getToken = localStorage.getItem("refresh");
+  let getAccess = localStorage.getItem("access");
+  console.log(getAccess);
   useEffect(() => {
     if (getToken && getToken !== null) {
       setRefreshToken(isJwtExpired(localStorage.getItem("refresh")));
@@ -57,7 +66,13 @@ function App() {
       setRefreshToken(true);
     }
   });
-
+  useEffect(() => {
+    if (getAccess && getAccess !== null) {
+      setAccessToken(isJwtExpired(getAccess));
+    } else {
+      setAccessToken(true);
+    }
+  });
   function useLocalStrage(key, oldValue) {
     const [storedValue, setStoredValue] = useState(() => {
       const getValue = localStorage.getItem(key);
@@ -105,7 +120,7 @@ function App() {
     getTopProducts().then((products) => {
       setTopProduct(products.data.results);
 
-       if (products.data.results.length < 12) {
+      if (products.data.results.length < 12) {
         setNoMore(false);
       }
     });
@@ -168,25 +183,27 @@ function App() {
                         <TokensContext.Provider
                           value={[refreshToken, setRefreshToken]}
                         >
-                          <Switch>
-                            <Route path="/" exact component={Home} />
-                            <Route path="/contact" component={Contact} />
-                            <Route path="/about" component={About} />
-                            <Route path="/profile" component={Profile} />
-                            <Route
-                              path="/product_card/:slug"
-                              component={ProductCard}
-                            />
-                            <Route path="/basket" component={Basket} />
-                            <Route
-                              path="/category/:slug"
-                              component={CategoryItems}
-                            />
-                            <Route path="/search/:slug" component={Term} />
-                            <Route path="/user/sign_in" component={SignIn} />
-                            <Route path="/user/sign_up" component={SignUp} />
-                            <Route path="/my_orders" component={MyOrders} />
-                          </Switch>
+                          <AccessTokenContext.Provider value={{ accessToken }}>
+                            <Switch>
+                              <Route path="/" exact component={Home} />
+                              <Route path="/contact" component={Contact} />
+                              <Route path="/about" component={About} />
+                              <Route path="/profile" component={Profile} />
+                              <Route
+                                path="/product_card/:slug"
+                                component={ProductCard}
+                              />
+                              <Route path="/basket" component={Basket} />
+                              <Route
+                                path="/category/:slug"
+                                component={CategoryItems}
+                              />
+                              <Route path="/search/:slug" component={Term} />
+                              <Route path="/user/sign_in" component={SignIn} />
+                              <Route path="/user/sign_up" component={SignUp} />
+                              <Route path="/my_orders" component={MyOrders} />
+                            </Switch>
+                          </AccessTokenContext.Provider>
                         </TokensContext.Provider>
                       </ChangeSearchContext.Provider>
                     </TopProductContext.Provider>

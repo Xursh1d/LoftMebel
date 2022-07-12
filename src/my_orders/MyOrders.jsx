@@ -11,7 +11,6 @@ import emptyIcon from "../LoftMebelPhoto/page-empty-page.jpg";
 import ProductList from "./ProductList";
 import HorizontalLinearStepper from "./Stepper";
 import { Redirect } from "react-router";
-import { reducer } from "./reducer";
 
 const useStyles = makeStyles((theme) => ({
   typography: {

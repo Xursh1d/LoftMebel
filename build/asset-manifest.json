@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4e1dbeb3.chunk.css",
+    "main.js": "/static/js/main.48673987.chunk.js",
+    "main.js.map": "/static/js/main.48673987.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4eee0286.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4eee0286.js.map",
+    "static/css/2.dfd8ce67.chunk.css": "/static/css/2.dfd8ce67.chunk.css",
+    "static/js/2.420d8f5d.chunk.js": "/static/js/2.420d8f5d.chunk.js",
+    "static/js/2.420d8f5d.chunk.js.map": "/static/js/2.420d8f5d.chunk.js.map",
+    "static/js/3.827a01f4.chunk.js": "/static/js/3.827a01f4.chunk.js",
+    "static/js/3.827a01f4.chunk.js.map": "/static/js/3.827a01f4.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.dfd8ce67.chunk.css.map": "/static/css/2.dfd8ce67.chunk.css.map",
+    "static/css/main.4e1dbeb3.chunk.css.map": "/static/css/main.4e1dbeb3.chunk.css.map",
+    "static/js/2.420d8f5d.chunk.js.LICENSE.txt": "/static/js/2.420d8f5d.chunk.js.LICENSE.txt",
+    "static/media/bg-slider(1).777bdcd3.png": "/static/media/bg-slider(1).777bdcd3.png",
+    "static/media/delivery-icon-white.8e0e5848.svg": "/static/media/delivery-icon-white.8e0e5848.svg",
+    "static/media/delivery-icon.b3b30f9a.svg": "/static/media/delivery-icon.b3b30f9a.svg",
+    "static/media/image 1.21bb1e02.png": "/static/media/image 1.21bb1e02.png",
+    "static/media/inst.6acf6510.svg": "/static/media/inst.6acf6510.svg",
+    "static/media/index.css": "/static/media/roboto-latin-900italic.cb5ad999.woff2",
+    "static/media/logo.a32e0c81.svg": "/static/media/logo.a32e0c81.svg",
+    "static/media/mail.06318b54.svg": "/static/media/mail.06318b54.svg",
+    "static/media/menu-icon.5535d305.svg": "/static/media/menu-icon.5535d305.svg",
+    "static/media/page-empty-page.f355b648.jpg": "/static/media/page-empty-page.f355b648.jpg",
+    "static/media/phone-white.d218b26a.svg": "/static/media/phone-white.d218b26a.svg",
+    "static/media/phone.819f7d18.svg": "/static/media/phone.819f7d18.svg",
+    "static/media/production.06659a24.png": "/static/media/production.06659a24.png",
+    "static/media/profit.a7180077.png": "/static/media/profit.a7180077.png",
+    "static/media/search-icon.09fdda5c.svg": "/static/media/search-icon.09fdda5c.svg",
+    "static/media/slick-theme.css": "/static/media/slick.c94f7671.ttf",
+    "static/media/stock.e81205e1.svg": "/static/media/stock.e81205e1.svg",
+    "static/media/time.8fafe96d.png": "/static/media/time.8fafe96d.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4eee0286.js",
+    "static/css/2.dfd8ce67.chunk.css",
+    "static/js/2.420d8f5d.chunk.js",
+    "static/css/main.4e1dbeb3.chunk.css",
+    "static/js/main.48673987.chunk.js"
+  ]
+}

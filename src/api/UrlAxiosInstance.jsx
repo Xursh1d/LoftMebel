@@ -12,19 +12,19 @@ export const likeAxiosInstance = axios.create({
 });
 
 likeAxiosInstance.interceptors.request.use(async (req) => {
-  const refreshToken = JSON.parse(localStorage.getItem("refresh"));
-  if (!refreshToken) {
-    window.location.href = "/user/sign_in";
-  }
-  if (!isJwtExpired(getAccess)) return req;
-  //   localStorage.removeItem("refresh")
-  //   localStorage.removeItem("access")
+  // if (!getAccess) {
   //   window.location.href = "/user/sign_in";
-
-  // // const response = await axios.post(`${baseURL}/refresh/`, {
-  // //   refresh: refreshToken,
-  // // });
-  // // localStorage.setItem("access", JSON.stringify(response.data.data.access));
-  // // req.headers.Authorization = `Bearer ${response.data.data.access}`;
-  // // return req;
+  // }
+  // if (!isJwtExpired(getAccess)) return req;
+//   else {
+//     localStorage.removeItem("refresh");
+//     localStorage.removeItem("access");
+//     window.location.href = "/user/sign_in";
+// }
+  // const response = await axios.post(`${baseURL}/refresh/`, {
+  //   refresh: refreshToken,
+  // });
+  // localStorage.setItem("access", JSON.stringify(response.data.data.access));
+  // req.headers.Authorization = `Bearer ${response.data.data.access}`;
+  // return req;
 });
